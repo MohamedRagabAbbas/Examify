@@ -8,6 +8,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -29,8 +30,9 @@ export class LoginComponent {
   options = this._formBuilder.group({
     
   });
+  
+
 
   constructor(private _formBuilder: FormBuilder) {}
-
-
+  
 }

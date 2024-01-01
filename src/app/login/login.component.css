@@ -20,11 +20,21 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+}
+mat-radio-button
+{
+    display: flex;
+    align-items: center;
 }
 .motext
 {
     font-size: 18px;
     color: white;
+    margin-top: 50px;
 }
 
 .labels, .inputs
@@ -58,4 +68,23 @@ input
     box-shadow: 0 0 10px #e3e3e3;
     padding: 5px;
     font-size: 18px;
+    font-weight: normal;
+}
+label,span
+{
+    font-weight: normal;
+
+}
+.submit
+{
+    margin-top: 10px;
+    width: 50%;
+    height: 50px;
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #e3e3e3;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
 }

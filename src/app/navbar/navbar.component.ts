@@ -20,6 +20,9 @@ export class NavbarComponent {
   main() {
     this.router.navigate(['/']);
   }
+  signUp() {
+    this.router.navigate(['/signUp']);
+  }
 }
 
 
