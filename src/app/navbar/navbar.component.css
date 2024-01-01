@@ -1,0 +1,50 @@
+.example-spacer {
+  flex: 10 1 auto;
+}
+.mat-toolbar {
+  background-color: #2196f3; /* Change this to your desired color */
+}
+.logo
+{
+  margin-top: -15px;
+  margin-right:100px;
+  font-size: 50px;
+  color: turquoise;
+  
+}
+.logoIcon
+{
+  margin-left: 30px;
+}
+.logoName{
+  font-size: 20px;
+  margin-top: -3px;
+  margin-left: 25px;
+}
+.firstLetter{
+  font-size: 30px;
+  margin-top: -3px;
+  color: turquoise;
+}
+.userNameButton,.loginButton,.signUpButton
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 auto;
+}
+.userNameText,.loginText,.signUpText
+{
+  font-size: 15px;
+  color: white;
+  margin-top: 3px;
+}
+.userNameIcon,.loginIcon,.signUpIcon
+{
+  font-size: 30px;
+}
+button
+{
+  width: 100%;
+}
