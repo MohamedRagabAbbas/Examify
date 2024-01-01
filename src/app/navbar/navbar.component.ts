@@ -16,7 +16,9 @@ export class NavbarComponent {
 
   login() {
     this.router.navigate(['/login']);
-    console.log('login');
+  }
+  main() {
+    this.router.navigate(['/']);
   }
 }
 
