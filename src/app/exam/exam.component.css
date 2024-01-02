@@ -116,15 +116,15 @@ h1 {
 	height: 19px;
 	width: 19px;
 	border: 2px solid #524eee;
-	left: 19px;
-	top: calc(50% - 12px);
+	left: 22px;
+	top: calc(50% - 9.5px);
 }
 .radio-item label:before {
 	background: #524eee;
 	height: 20px;
 	width: 20px;
 	left: 21px;
-	top: calc(50%-5px);
+	top: calc(50%-30px);
 	transform: scale(5);
 	opacity: 0;
 	visibility: hidden;
