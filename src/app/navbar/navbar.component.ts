@@ -23,6 +23,10 @@ export class NavbarComponent {
   signUp() {
     this.router.navigate(['/signUp']);
   }
+  test()
+  {
+    this.router.navigate(['/GenerateExam']);
+  }
 }
 
 
