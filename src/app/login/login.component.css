@@ -1,3 +1,11 @@
+.mainContainer
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 64px); 
+  width: 100%;
+}
 .container
 {
     margin: 150px auto;
@@ -69,6 +77,7 @@ input
     padding: 5px;
     font-size: 18px;
     font-weight: normal;
+    color: black;
 }
 label,span
 {
