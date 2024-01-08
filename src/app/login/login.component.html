@@ -20,7 +20,7 @@
                 </mat-radio-group>
             </div>
         </div>
-        <button type="button" class="btn btn-primary submit">Login</button>
+        <button [disabled]="(formGroup.invalid)" type="button" class="btn btn-primary submit">Login</button>
     </form>
 </div>
 
