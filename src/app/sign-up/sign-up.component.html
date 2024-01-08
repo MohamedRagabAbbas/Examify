@@ -1,34 +1,39 @@
 <div class="mainContainer">
-    <form [formGroup]="options" class="container"  >
-
-
-        <div class="box">
-    
-    
-            <div class="labels" >
-                <div class="labelElement"><label for="">User Name: </label></div>
-                <div class="labelElement"><label for="">Email: </label></div>
-                <div class="labelElement"><label for="">Password: </label></div>
-                <div class="labelElement"><label for="">Confirm Password: </label></div>
-                <div class="labelElement"><label for="">I am a </label></div>
-            </div>
-        
-            <div class="inputs" >
-                <div class="inputElement"><input type="text" name="" id="" placeholder="Enter Your Name.." required ></div>
-                <div class="inputElement"><input type="text" name="" id="" placeholder="Enter Your Email.." required ></div>
-                <div class="inputElement"><input type="password" name="" id="" placeholder="Enter Your Password.."  ></div>
-                <div class="inputElement"><input type="password" name="" id="" placeholder="Enter Your Password.."  ></div>
-                <mat-radio-group class="options">
-                    <mat-radio-button value="Student"><span class="motext">Student</span></mat-radio-button>
-                    <span class="takingSpace"></span>
-                    <mat-radio-button value="Teacher"><span class ="motext">Teacher</span></mat-radio-button>
-                </mat-radio-group>
-            </div>
+    <form [formGroup]="formGroup" class="container" (ngSubmit)="onSubmit()">
+      <div class="box">
+        <div class="labels">
+          <div class="labelElement"><label for="">I am a </label></div>
+          <div class="labelElement"><label for="">User Name: </label></div>
+          <span style="display: flex; flex: 1 auto;" *ngIf = "name.invalid && name.dirty"></span>
+          <div class="labelElement"><label for="">Email: </label></div>
+          <span style="display: flex; flex: 1 auto;" *ngIf = "email.invalid && email.dirty"></span>
+          <div class="labelElement" *ngIf="!hide"><label for="">Grade: </label></div>
+          <span style="display: flex; flex: 1 auto;" *ngIf = "grade.invalid && grade.dirty"></span>
+          <div class="labelElement"><label for="">Password: </label></div>
+          <span style="display: flex; flex: 1 auto;" *ngIf = "password.invalid && password.dirty"></span>
+          <div class="labelElement"><label for="">Confirm Password: </label></div>
+          <span style="display: flex; flex: 1 auto;" *ngIf = "confirmPassword.dirty && (confirmPassword.invalid || confirmPassword.value !== password.value)"></span>
         </div>
-        <button type="button" class="btn btn-primary submit">Sign Up</button>
-       
+  
+        <div class="inputs">
+          <mat-radio-group class="options" formControlName="isStudent" style="align-self: center;">
+            <mat-radio-button value="Student"><span class="motext">Student</span></mat-radio-button>
+            <span class="takingSpace"></span>
+            <mat-radio-button value="Teacher"><span class="motext">Teacher</span></mat-radio-button>
+          </mat-radio-group>
+          <div class="inputElement"><input type="text" placeholder="Enter Your Name.." formControlName="name"></div>
+          <h5 *ngIf = "name.invalid && name.dirty">{{getErrorMessage(name)}}</h5>
+          <div class="inputElement"><input type="text" placeholder="Enter Your Email.." formControlName="email"></div>
+          <h5 *ngIf = "email.invalid && email.dirty">{{getErrorMessage(email)}}</h5>
+          <div class="inputElement" *ngIf="!hide"><input type="text" placeholder="Enter Your Grade.." formControlName="grade"></div>
+          <h5 *ngIf = "grade.invalid && grade.dirty">{{getErrorMessage(grade)}}</h5>
+          <div class="inputElement"><input type="password" placeholder="Enter Your Password.." formControlName="password"></div>
+          <h5 *ngIf = "password.invalid && password.dirty">{{getErrorMessage(password)}}</h5>
+          <div class="inputElement"><input type="password" placeholder="Enter Your Password.." formControlName="confirmPassword"></div>
+          <h5 *ngIf=" confirmPassword.dirty && (confirmPassword.invalid || confirmPassword.value !== password.value)"> Passwords do not match.</h5>
+        </div>
+      </div>
+      <button [disabled]="(formGroup.invalid || confirmPassword.value !== password.value)" class="btn btn-primary submit" type="submit" >Sign Up</button>
     </form>
-    
-</div>
-
-
+  </div>
+  
