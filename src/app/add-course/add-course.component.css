@@ -1,0 +1,101 @@
+*{
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+.mainContainer
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 64px); 
+  width: 100%;
+}
+.container
+{
+
+    width: 50%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    background-color: #2196f3;
+    box-shadow: 0 0 10px #e3e3e3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.options
+{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.motext
+{
+    font-size: 18px;
+    color: white;
+}
+
+.labels, .inputs
+{
+    display: flex;
+    flex-direction: column;
+}
+.inputs
+{
+    width: 60%;
+    
+}
+input{
+    color: black;
+}
+
+.box
+{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+}
+.labelElement, .inputElement
+{
+    height: 50px;
+    font-size: 18px;
+    color: white;
+}
+.labels{
+    width: 20%;
+}
+.inputs
+{
+    width: 70%;
+}
+
+input
+{
+    width: 100%;
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 0 10px #e3e3e3;
+    padding: 5px;
+    font-size: 18px;
+}
+.submit
+{
+    margin-top: 10px;
+    width: 50%;
+    height: 50px;
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #e3e3e3;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}

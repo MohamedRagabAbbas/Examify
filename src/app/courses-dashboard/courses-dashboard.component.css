@@ -1,0 +1,18 @@
+.mainContainer
+{
+    margin: 20px auto;
+    width: 85%;
+    padding: 20px;
+    background-color: #7FC7D9;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
+}
+
+.course
+{
+    margin: 10px;
+    padding: 10px;
+    background-color: #DCF2F1;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
+}

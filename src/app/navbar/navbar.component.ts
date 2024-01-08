@@ -18,7 +18,7 @@ export class NavbarComponent {
     this.router.navigate(['/login']);
   }
   main() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/courseDashboard']);
   }
   signUp() {
     this.router.navigate(['/signUp']);
