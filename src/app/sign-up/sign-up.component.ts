@@ -9,6 +9,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { ServerSideService } from '../server-side.service';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -21,9 +24,10 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatIconModule,CommonModule],
+    MatIconModule,CommonModule,HttpClientModule],
   templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.css'
+  styleUrl: './sign-up.component.css',
+  providers: [ServerSideService]
 })
 
 
@@ -31,7 +35,7 @@ export class SignUpComponent {
   formGroup: FormGroup;
   hide = true;
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(private _formBuilder: FormBuilder, private serverSideService:ServerSideService) {
     this.formGroup = this._formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-zA-Z0-9_.]+@[a-zA-Z0-9-]+[\.][a-zA-Z]{2,}$')]],
@@ -63,7 +67,7 @@ export class SignUpComponent {
     });
   }
   onSubmit() {
-    console.log(this.formGroup.value);
+    this.serverSideService.getTeachers();
   }
 
   get name() {
