@@ -1,5 +1,5 @@
 <div class="mainContainer">
-    <form [formGroup]="formGroup" class="container"  >
+    <form [formGroup]="formGroup" class="container" (ngSubmit)="onSubmit()"  >
         <div class="box">
             <div class="labels" >
                 <div class="labelElement"><label for="">Email: </label></div>
@@ -20,7 +20,7 @@
                 </mat-radio-group>
             </div>
         </div>
-        <button [disabled]="(formGroup.invalid)" type="button" class="btn btn-primary submit">Login</button>
+        <button [disabled]="(formGroup.invalid)"  class="btn btn-primary submit">Login</button>
     </form>
 </div>
 

@@ -9,8 +9,10 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ]
 })
-export class TeacherInfo {
-  name:string='';
-  email:string='';
-  password:string='';
+export class User {
+  Id:number = 0;
+  UserEmail:string = "";
+  UserPassword:string = "";
+  UserRule:string = "";
+  Status:boolean = false;
  }

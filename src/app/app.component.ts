@@ -5,10 +5,16 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ReactiveFormsModule } from '@angular/forms';  
 import { HttpClientModule } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet,NavbarComponent,ReactiveFormsModule,HttpClientModule],
+  imports: [CommonModule
+    , RouterOutlet
+    ,NavbarComponent
+    ,ReactiveFormsModule
+    ,HttpClientModule
+    ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

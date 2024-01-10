@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import {routes} from '../app.routes';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {FloatLabelType, MatFormFieldModule} from '@angular/material/form-field';
@@ -11,7 +10,11 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ServerSideService } from '../server-side.service';
 import { HttpClientModule } from '@angular/common/http';
-
+import { StudentInfo } from '../models/student-info/student-info.module';
+import { TeacherInfo } from '../models/teacher-info/teacher-info.module';
+import { ResponseClass } from '../models/response-class/response-class.module';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sign-up',
@@ -24,18 +27,24 @@ import { HttpClientModule } from '@angular/common/http';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatIconModule,CommonModule,HttpClientModule],
+    MatIconModule,
+    CommonModule,
+    HttpClientModule,
+  ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
-  providers: [ServerSideService]
+  providers: [ServerSideService,ToastrService,]
 })
 
 
 export class SignUpComponent {
   formGroup: FormGroup;
+  stdeunt: StudentInfo = new StudentInfo();
+  teacher: TeacherInfo = new TeacherInfo();
   hide = true;
 
-  constructor(private _formBuilder: FormBuilder, private serverSideService:ServerSideService) {
+  constructor(private _formBuilder: FormBuilder, private serverSideService:ServerSideService,private navigator:Router
+    ,private toastr: ToastrService) {
     this.formGroup = this._formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-zA-Z0-9_.]+@[a-zA-Z0-9-]+[\.][a-zA-Z]{2,}$')]],
@@ -66,8 +75,19 @@ export class SignUpComponent {
       console.log(this.confirmPassword.invalid && this.confirmPassword.dirty && this.confirmPassword.value !== this.password.value);
     });
   }
+
+
+
   onSubmit() {
-    this.serverSideService.getTeachers();
+    if(this.isStudent.value==='Teacher')
+    {
+      this.addTeacher();
+      console.log('I am here');
+    }
+    else if(this.isStudent.value==='Student')
+    {
+      this.AddStudent();
+    }
   }
 
   get name() {
@@ -121,4 +141,61 @@ export class SignUpComponent {
 
     return 'Error, Please Enter Valid Input';
   }
+
+  addTeacher()
+  {
+    this.teacher.name=this.name.value;
+    this.teacher.email=this.email.value;
+    this.teacher.password=this.password.value;
+    this.serverSideService.addTeacher(this.teacher).subscribe(
+      (data)=>
+      {
+        let result: ResponseClass<TeacherInfo> = new ResponseClass<TeacherInfo>;
+        result = data as ResponseClass<TeacherInfo>;
+        if(result.status==true)
+        {
+          this.toastr.success("Login Successfull","Success").onHidden.subscribe(() => {
+          this.navigator.navigate(['/login'])});
+        }
+        else
+        {
+          //use toster here to show error message
+          this.toastr.error("Login Failed","Error");
+        }
+        
+     });;
+  }
+
+  AddStudent()
+  {
+    this.stdeunt.name=this.name.value;
+    this.stdeunt.email=this.email.value;
+    this.stdeunt.password=this.password.value;
+    this.stdeunt.grade=this.grade.value;
+    this.serverSideService.addStudent(this.stdeunt).subscribe(
+      (data)=>
+      {
+        let result: ResponseClass<StudentInfo> = new ResponseClass<StudentInfo>;
+        result = data as ResponseClass<StudentInfo>;
+        if(result.status==true)
+        {
+          // navigate to login page after 2 sec 
+          //use toster here to show success message
+          this.toastr.success("Login Successful", "Success").onHidden.subscribe(() => {
+            // This code will execute after the success toast is hidden
+            this.navigator.navigate(['/login']);
+          });
+
+        }
+        else
+        {
+          //use toster here to show error message
+          this.toastr.error("Login Failed","Error");
+        }
+      }
+    );
+  }
+
+
+
 }
