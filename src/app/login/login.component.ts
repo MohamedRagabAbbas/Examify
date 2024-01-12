@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ResponseClass } from '../models/response-class/response-class.module';
 import { User } from '../models/user/user.module';
+import { Teacher } from '../BackEndModels/models/models.module';
 
 
 @Component({
@@ -105,6 +106,12 @@ export class LoginComponent {
     {
       let result:ResponseClass<TeacherInfo> = new ResponseClass<TeacherInfo>();
       result=data as ResponseClass<TeacherInfo>;
+
+      let result2:ResponseClass<Teacher> = new ResponseClass<Teacher>();
+      result2=data as ResponseClass<Teacher>;
+
+      //console.log(result2);
+
       if(result.status==true)
       {
         this.toastr.success('Login Successfully', 'Success').onHidden.subscribe(() => {
@@ -118,8 +125,14 @@ export class LoginComponent {
         {
             let result:ResponseClass<User> = new ResponseClass<User>();
             result=data as ResponseClass<User>;
-            localStorage.setItem('user', JSON.stringify(result.data));
-            this.navigator.navigate(['/courseDashboard']);});
+            this.user ? result.data:null;
+            localStorage.setItem('user', JSON.stringify(this.user));
+            localStorage.setItem(this.user.UserEmail, JSON.stringify(result2.data));
+            });
+        
+        //console.log("I am in login page ")
+        //console.log(this.user);
+        //console.log(this.user);
       }
       else
       {

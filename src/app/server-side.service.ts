@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
+import { CourseInfo } from './models/course-info/course-info.module';
 
 
 @Injectable({
@@ -83,9 +84,25 @@ export class ServerSideService {
   // Add User
   addUser(user:User)
   {
-
-    
-    localStorage.setItem('user', JSON.stringify(user));
     return this.httpClient.post(`${this.rootAPI}User/AddUser`,user);
   }
+
+  // Course Section
+  addCourse(course:CourseInfo,teacherId:number)
+  {
+    return this.httpClient.post(`${this.rootAPI}Course/AddCourse/${teacherId}`,course);
+  }
+
+  getCourses()
+  {
+    return this.httpClient.get(`${this.rootAPI}Course/GetCourses`);
+  }
+
+  // get course by teacher id
+  getCourseByTeacherId(id:number)
+  {
+    return this.httpClient.get(`${this.rootAPI}Teacher/GetAllCoursesForTeacher/${id}`);
+  }
+
+
 }

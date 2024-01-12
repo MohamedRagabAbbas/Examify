@@ -1,5 +1,5 @@
 <div class="mainContainer">
-    <form [formGroup]="formGroup" class="container"  >
+    <form [formGroup]="formGroup" class="container"  (ngSubmit)="onSubmit()" >
         <div class="box">
             <div class="labels" >
                 <div class="labelElement"><label for="">Code: </label></div>
@@ -18,7 +18,7 @@
                    <h5 class= "" *ngIf = "grade.invalid && grade.dirty">{{getErrorMessage(grade)}}</h5>
             </div>
         </div>
-        <button [disabled]="(formGroup.invalid)" type="button" class="btn btn-primary submit">Add</button>
+        <button [disabled]="(formGroup.invalid)" class="btn btn-primary submit">Add</button>
     </form>
 </div>
 

@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   ]
 })
 export class CourseInfo {
-  code: string = '';
-  subject: string = '';
-  grade: string = '';
+  Code: string = '';
+  Subject: string = '';
+  Grade: string = '';
 }
