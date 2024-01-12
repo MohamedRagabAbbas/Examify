@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ResponseClass } from '../models/response-class/response-class.module';
 import { User } from '../models/user/user.module';
-import { Teacher } from '../BackEndModels/models/models.module';
+import { Student, Teacher } from '../BackEndModels/models/models.module';
 
 
 @Component({
@@ -144,34 +144,37 @@ export class LoginComponent {
 
   StudentLogin()
   {
-      this.serverSideService.studentLogin(this.email.value, this.password.value).subscribe((data)=>
+    this.serverSideService.studentLogin(this.email.value, this.password.value).subscribe((data)=>
+    {
+      let result:ResponseClass<Student> = new ResponseClass<Student>();
+      result=data as ResponseClass<Student>;
+
+      let result2:ResponseClass<Student> = new ResponseClass<Student>();
+      result2=data as ResponseClass<Student>;
+      if(result.status==true)
       {
-        let result:ResponseClass<StudentInfo> = new ResponseClass<StudentInfo>();
-        result=data as ResponseClass<StudentInfo>;
-        if(result.status==true)
+        this.toastr.success('Login Successfully', 'Success').onHidden.subscribe(() => {
+        this.navigator.navigate(['/courseDashboard']);});
+        this.user.Id = 0;
+        this.user.UserEmail = result.data?.email ?? '';
+        this.user.UserPassword = result.data?.password ?? '';
+        this.user.UserRule = 'Student';
+        this.user.Status = true;
+        this.serverSideService.addUser(this.user).subscribe((data)=>
         {
-          this.toastr.success('Login Successfully', 'Success').onHidden.subscribe(() => 
-          {
-            
-            this.user.Id = 0;
-            this.user.UserEmail = result.data?.email ?? '';
-            this.user.UserPassword = result.data?.password ?? '';
-            this.user.UserRule = 'Student';
-            this.user.Status = true;
-            this.serverSideService.addUser(this.user).subscribe((data)=>
-            {
-                let result:ResponseClass<User> = new ResponseClass<User>();
-                result=data as ResponseClass<User>;
-                localStorage.setItem('user', JSON.stringify(result.data));
-                this.navigator.navigate(['/courseDashboard']);});
-          });
-        }
-        else
-        {
-          this.toastr.error('Login Failed', 'Error');
-        }
+            let result:ResponseClass<User> = new ResponseClass<User>();
+            result=data as ResponseClass<User>;
+            this.user ? result.data:null;
+            //console.log(this.user);
+            localStorage.setItem('user', JSON.stringify(this.user));
+            localStorage.setItem(this.user.UserEmail, JSON.stringify(result2.data));
+            });
       }
-      );
+      else
+      {
+        this.toastr.error('Login Failed', 'Error');
+      }
+    });
   }
   
 }

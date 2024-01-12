@@ -5,6 +5,8 @@ import { ServerSideService } from '../server-side.service';
 import { User } from '../models/user/user.module';
 import { Course, Student, Teacher } from '../BackEndModels/models/models.module';
 import { ResponseClass } from '../models/response-class/response-class.module';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 @Component({
@@ -18,10 +20,11 @@ import { ResponseClass } from '../models/response-class/response-class.module';
 export class CoursesDashboardComponent {
   isStudent = true;
   user:User = new User();
+  courseCode:string = '';
   teacher:Teacher = new Teacher();
   student:Student = new Student();
   courses:Array<Course> = new Array<Course>();
-  constructor(private serverSideService: ServerSideService, private router: Router  ) 
+  constructor(private serverSideService: ServerSideService, private router: Router, private toastr: ToastrService  ) 
   {
     const value = localStorage.getItem('user');
     this.user = value ? JSON.parse(value) : null;
@@ -48,13 +51,22 @@ export class CoursesDashboardComponent {
           console.log(this.courses);
         });
       }
-
-
-      else
+      else if (this.user.UserRule === 'Student')
       {
         this.isStudent = true;
         const value2 = localStorage.getItem(this.user.UserEmail);
+        console.log(value2);
         this.student = value2 ? JSON.parse(value2) : null;
+        //console.log(this.student);
+
+
+        serverSideService.getCourseByStudentId(this.student.id).subscribe((date) => {
+          let value3:ResponseClass<Array<Course>> = new ResponseClass<Array<Course>>();
+          value3 = date as ResponseClass<Array<Course>>;
+          this.courses = value3.data? value3.data : new Array<Course>();
+          console.log(this.courses);
+        });
+        
       }
 
 
@@ -77,14 +89,38 @@ export class CoursesDashboardComponent {
     this.router.navigate(['/addCourse']);
   }
 
+  AddCourseStudent()
+  {
+    this.serverSideService.addCourseToStudent(this.student.id,this.courseCode).subscribe((data) => 
+    {
+      let value:ResponseClass<Course> = new ResponseClass<Course>();
+      value = data as ResponseClass<Course>;
+      if(value.status == true)
+      {
+        this.toastr.success('Course Added Successfully', 'Success').onHidden.subscribe(() =>
+        {
+          // update the page to see the new added course
 
-
- 
+          this.serverSideService.getCourseByStudentId(this.student.id).subscribe((date) => {
+            let value3:ResponseClass<Array<Course>> = new ResponseClass<Array<Course>>();
+            value3 = date as ResponseClass<Array<Course>>;
+            this.courses = value3.data? value3.data : new Array<Course>();
+            console.log(this.courses);
+          });
+        });
+      }
+      else
+      {
+        this.toastr.error('Course Not Added', 'Error');
+      }
+    });
   }
-
+  courseCodeChange(event:any)
+  { 
+    this.courseCode = event.target.value;
+  }
   
-  
-
+}
 
 // define a new object of id and values:array of courses  
 export class obj{

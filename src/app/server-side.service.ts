@@ -104,5 +104,17 @@ export class ServerSideService {
     return this.httpClient.get(`${this.rootAPI}Teacher/GetAllCoursesForTeacher/${id}`);
   }
 
+  // get course by student id
+
+  getCourseByStudentId(id:number)
+  {
+    return this.httpClient.get(`${this.rootAPI}Student/GetAllCoursesForStudent/${id}`);
+  }
+
+  // add course to stduent 
+  addCourseToStudent(studentId:number,courseCode:string)
+  {
+    return this.httpClient.post(`${this.rootAPI}Student/AddCourseToStudent/${studentId}/${courseCode}`,null);
+  }
 
 }

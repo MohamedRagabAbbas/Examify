@@ -23,11 +23,11 @@
                 <h1>Add New Course</h1>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="inputGroup-sizing-default">Course's Code</span>
-                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" (change)="courseCodeChange($event)">
                 </div>
             </div>
         </div>
-        <button class="btn btn-outline-primary" style="width: 100%;"> Add Course</button>
+        <button class="btn btn-outline-primary" style="width: 100%;" (click) = "AddCourseStudent()"> Add Course</button>
     </div>
 
     <div class="course col-lg-5" *ngIf="(!isStudent)">
