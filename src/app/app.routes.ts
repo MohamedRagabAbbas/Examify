@@ -6,6 +6,7 @@ import { AddCourseComponent } from './add-course/add-course.component';
 import { CoursesDashboardComponent } from './courses-dashboard/courses-dashboard.component';
 import { ExamDashboardComponent } from './exam-dashboard/exam-dashboard.component';
 import { UpdateExamComponent } from './update-exam/update-exam.component';
+import { OpenExamComponent } from './open-exam/open-exam.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -15,6 +16,7 @@ export const routes: Routes = [
     { path: 'courseDashboard', component: CoursesDashboardComponent },
     { path: `examDashboard/:id`, component: ExamDashboardComponent, },
     { path: 'updateExam/:id', component: UpdateExamComponent },
+    { path: 'openExam/:id', component: OpenExamComponent },
 
 ];
 

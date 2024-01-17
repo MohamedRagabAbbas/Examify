@@ -14,12 +14,8 @@ export class ModelsModule { }
 // TypeScript equivalent for Answer class
 export class Answer {
   id: number = 0;
-  courseId: number = 0;
-  course: Course = new Course();
   studentId: number = 0;
   student: Student = new Student();
-  examId: number = 0;
-  exam: Exam = new Exam();
   questionId: number = 0;
   question: Question = new Question();
   answerOption: string = "";
@@ -60,8 +56,6 @@ export class Exam {
 // TypeScript equivalent for Grade class
 export class Grade {
   id: number = 0;
-  courseId: number = 0;
-  course: Course = new Course();
   examId: number = 0;
   exam: Exam = new Exam();
   studentId: number = 0;

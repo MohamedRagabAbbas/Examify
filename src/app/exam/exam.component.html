@@ -1,125 +1,118 @@
 <div class="mainContainer">
 
-    <div  class="container" (ngSubmit)="onSubmit()">
+  <div  class="container" (ngSubmit)="onSubmit()">
 
-        <form class="header" [formGroup]="formGroup" (ngSubmit)="submitExamInfo()">
-               <div class="input-group mb-3" style="width: 90%;">
-                <span class="input-group-text " id="inputGroup-sizing-default" style="padding: 10px;" >Name</span>
-                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" formControlName = "examName">
-              </div>
-              <div class="form-floating" style="width: 90%;">
-                <textarea class="form-control" placeholder="Exam Description" id="floatingTextarea2" style="height: 100px; width: 100%;" formControlName = "examDescription"></textarea>
-                <label for="floatingTextarea2" >Exam Description</label>
-              </div>
-              <div style="width: 90%;">
-                    <div class="">
-                        <h1>Starting Time</h1>
-                        <input type="datetime-local" (change)="startDateChanged($event)">
-                    </div>
-                    <br>
-                    <div class="">
-                        <h1>Ending Time</h1>
-                        <input type="datetime-local" (change)="endDateChanged($event)" >
-                    </div>
-              </div>
-              <button class="btn btn-outline-primary p-2 w-75 " style="margin-top: 20px; margin-bottom: 20px; margin-left: 12.5%;" >Add Exam Information</button>
-          </form>
-          
-
-        <div class="box" *ngFor="let que of questions" >
-          <div class="qustionNumber justify-content-around text-center align-items-center">
-              <h2 style="font-weight: bold;">{{que.questionNumber}}</h2>
-              <h2 style="font-weight: bold;">Points : {{que.weight}}</h2>
-          </div>
-
-          <div class="questionBox">
-              <h1>{{que.questionText}}</h1>
-                  <div class="input-group mb-3 questionOption">
-                        <div class="input-group-text p-2">
-                          <input class="form-check-input mt-0"  type="radio" value="Option1" name="options" aria-label="Radio button for following text input" >
-                        </div>
-                        <span class="input-group-text" id="basic-addon1">A</span>
-                        <input type="text" class="form-control" placeholder="Option A" aria-label="Option A" aria-describedby="basic-addon1" value="{{que.option1}}" disabled>
-                    </div>
-                    <div class="input-group mb-3 questionOption">
-                        <div class="input-group-text p-2">
-                          <input class="form-check-input mt-0" type="radio" value="Option2" name="options" aria-label="Radio button for following text input">
-                        </div>
-                        <span class="input-group-text" id="basic-addon1">B</span>
-                        <input type="text" class="form-control" placeholder="Option B" aria-label="Option B" aria-describedby="basic-addon1" value="{{que.option2}}" disabled>
-                    </div>
-                    <div class="input-group mb-3 questionOption">
-                        <div class="input-group-text p-2">
-                          <input class="form-check-input mt-0" type="radio" value="Option3" name="options" aria-label="Radio button for following text input">
-                        </div>
-                        <span class="input-group-text" id="basic-addon1">C</span>
-                        <input type="text" class="form-control" placeholder="Option C" aria-label="Option C" aria-describedby="basic-addon1" value="{{que.option3}}" disabled>
-                    </div>
-                    <div class="input-group mb-3 questionOption">
-                        <div class="input-group-text p-2">
-                          <input class="form-check-input mt-0" type="radio" value="Option4" name="options" aria-label="Radio button for following text input">
-                        </div>
-                        <span class="input-group-text" id="basic-addon1">D</span>
-                        <input type="text" class="form-control" placeholder="Option D" aria-label="Option D" aria-describedby="basic-addon1" value="{{que.option4}}" disabled>
+      <form class="header" [formGroup]="formGroup" (ngSubmit)="submitExamInfo()">
+             <div class="input-group mb-3" style="width: 90%;">
+              <span class="input-group-text " id="inputGroup-sizing-default" style="padding: 10px;" >Name</span>
+              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" formControlName = "examName">
+            </div>
+            <div class="form-floating" style="width: 90%;">
+              <textarea class="form-control" placeholder="Exam Description" id="floatingTextarea2" style="height: 100px; width: 100%;" formControlName = "examDescription"></textarea>
+              <label for="floatingTextarea2" >Exam Description</label>
+            </div>
+            <div style="width: 90%;">
+                  <div class="">
+                      <input type="datetime-local" (change)="startDateChanged($event)">
                   </div>
-              </div>
+                  <br>
+                  <div class="">
+                      <input type="datetime-local" (change)="endDateChanged($event)" >
+                  </div>
+            </div>
+            <button class="btn btn-outline-primary p-2 w-75 " style="margin-top: 20px; margin-bottom: 20px; margin-left: 12.5%;" >Submit Exam Information</button>
+        </form>
+        
+
+      <div class="box" *ngFor="let que of questions" >
+        <div class="qustionNumber justify-content-around text-center align-items-center">
+            <h2 style="font-weight: bold;">{{que.questionNumber}}</h2>
+            <h2 style="font-weight: bold;">Points : {{que.weight}}</h2>
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-        <form class="box" [formGroup]="formGroup2"  *ngIf="addnewQuestion">
-            <div class="qustionNumber justify-content-around text-center align-items-center">
-                <input class="input-group-text input-group-lg text-input  inputStyleHeader text-start" type="text" placeholder="Question's number"  formControlName = "questionNumber">
-                <input class="input-group-text input-group-lg text-input  inputStyleHeader text-start" type="text" placeholder="Question's points" formControlName = "questionWeight">
+        <div class="questionBox">
+            <h1>{{que.questionText}}</h1>
+                <div class="input-group mb-3 questionOption">
+                      <div class="input-group-text p-2">
+                        <input class="form-check-input mt-0"  type="radio" value="Option1" name="options" aria-label="Radio button for following text input" [checked]="que.correctAnswer === 'Option1' " disabled>
+                      </div>
+                      <span class="input-group-text" id="basic-addon1">A</span>
+                      <input type="text" class="form-control" placeholder="Option A" aria-label="Option A" aria-describedby="basic-addon1" value="{{que.option1}}" disabled>
+                  </div>
+                  <div class="input-group mb-3 questionOption">
+                      <div class="input-group-text p-2">
+                        <input class="form-check-input mt-0" type="radio" value="Option2" name="options" aria-label="Radio button for following text input" [checked]="que.correctAnswer === 'Option2' " disabled>
+                      </div>
+                      <span class="input-group-text" id="basic-addon1">B</span>
+                      <input type="text" class="form-control" placeholder="Option B" aria-label="Option B" aria-describedby="basic-addon1" value="{{que.option2}}" disabled>
+                  </div>
+                  <div class="input-group mb-3 questionOption">
+                      <div class="input-group-text p-2">
+                        <input class="form-check-input mt-0" type="radio" value="Option3" name="options" aria-label="Radio button for following text input" [checked]="que.correctAnswer === 'Option3' " disabled>
+                      </div>
+                      <span class="input-group-text" id="basic-addon1">C</span>
+                      <input type="text" class="form-control" placeholder="Option C" aria-label="Option C" aria-describedby="basic-addon1" value="{{que.option3}}" disabled>
+                  </div>
+                  <div class="input-group mb-3 questionOption">
+                      <div class="input-group-text p-2">
+                        <input class="form-check-input mt-0" type="radio" value="Option4" name="options" aria-label="Radio button for following text input" [checked]="que.correctAnswer === 'Option4' " disabled>
+                      </div>
+                      <span class="input-group-text" id="basic-addon1">D</span>
+                      <input type="text" class="form-control" placeholder="Option D" aria-label="Option D" aria-describedby="basic-addon1" value="{{que.option4}}" disabled>
+                </div>
+                <div class="buttons p-0">
+                  <button class="btn btn-outline-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="updateQuestion(que.id)">Update Question</button>
+                  <button class="btn btn-outline-danger" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="deleteQuestion(que.id)">Delete Question</button>
+                </div>
             </div>
-            <div class="questionBox" >
-                <input class="input-group-text input-group-lg text-input inputStyle text-start" type="text" placeholder="Question's Text"  formControlName = "questionText">
-                <br>
+      </div>
+
+
+      <form class="box" [formGroup]="formGroup2"  *ngIf="(addnewQuestion ||isUpdate)">
+          <div class="qustionNumber justify-content-around text-center align-items-center">
+              <input class="input-group-text input-group-lg text-input  inputStyleHeader text-start" type="text" placeholder="Question's number"  formControlName = "questionNumber">
+              <input class="input-group-text input-group-lg text-input  inputStyleHeader text-start" type="text" placeholder="Question's points" formControlName = "questionWeight">
+          </div>
+          <div class="questionBox" >
+              <input class="input-group-text input-group-lg text-input inputStyle text-start" type="text" placeholder="Question's Text"  formControlName = "questionText">
+              <br>
+                  <div class="input-group mb-3 questionOption">
+                    <div class="input-group-text p-2">
+                      <input class="form-check-input mt-0"  type="radio" value="Option1" name="questionCorrectAnswer" aria-label="Radio button for following text input" formControlName = "questionCorrectAnswer" >
+                    </div>
+                      <span class="input-group-text" id="basic-addon1">A</span>
+                      <input type="text" class="form-control" placeholder="Option A" aria-label="Option A" aria-describedby="basic-addon1" formControlName = "questionOption1">
+                    </div>
                     <div class="input-group mb-3 questionOption">
                       <div class="input-group-text p-2">
-                        <input class="form-check-input mt-0"  type="radio" value="Option1" name="options" aria-label="Radio button for following text input" >
+                        <input class="form-check-input mt-0" type="radio" value="Option2" name="questionCorrectAnswer" aria-label="Radio button for following text input" formControlName = "questionCorrectAnswer">
                       </div>
-                        <span class="input-group-text" id="basic-addon1">A</span>
-                        <input type="text" class="form-control" placeholder="Option A" aria-label="Option A" aria-describedby="basic-addon1" formControlName = "questionOption1">
-                      </div>
-                      <div class="input-group mb-3 questionOption">
-                        <div class="input-group-text p-2">
-                          <input class="form-check-input mt-0" type="radio" value="Option2" name="options" aria-label="Radio button for following text input">
-                        </div>
-                        <span class="input-group-text" id="basic-addon1">B</span>
-                        <input type="text" class="form-control" placeholder="Option B" aria-label="Option B" aria-describedby="basic-addon1" formControlName = "questionOption2">
-                      </div>
-                      <div class="input-group mb-3 questionOption">
-                        <div class="input-group-text p-2">
-                          <input class="form-check-input mt-0" type="radio" value="Option3" name="options" aria-label="Radio button for following text input">
-                        </div>
-                        <span class="input-group-text" id="basic-addon1">C</span>
-                        <input type="text" class="form-control" placeholder="Option C" aria-label="Option C" aria-describedby="basic-addon1" formControlName = "questionOption3">
-                      </div>
-                      <div class="input-group mb-3 questionOption">
-                        <div class="input-group-text p-2">
-                          <input class="form-check-input mt-0" type="radio" value="Option4" name="options" aria-label="Radio button for following text input">
-                        </div>
-                        <span class="input-group-text" id="basic-addon1">D</span>
-                        <input type="text" class="form-control" placeholder="Option D" aria-label="Option D" aria-describedby="basic-addon1" formControlName = "questionOption4">
-                      </div>
-                      <div class="buttons p-0">
-                        <button class="btn btn-outline-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="submitQuestion()">Submit Question</button>
-                        <button class="btn btn-outline-danger" style="margin-top: 20px; margin-bottom: 20px;" type="button" >Delete Question</button>
-                      </div>
+                      <span class="input-group-text" id="basic-addon1">B</span>
+                      <input type="text" class="form-control" placeholder="Option B" aria-label="Option B" aria-describedby="basic-addon1" formControlName = "questionOption2">
                     </div>
-         </form>
-        <div class="buttons">
-            <button [disabled]="(!canAddQuestion)" class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="addQuestion()">Add Question</button>
-            <button [disabled]="(!canAddQuestion)" class="btn btn-success" style="margin-top: 20px; margin-bottom: 20px;">Submit</button>
-        </div>
+                    <div class="input-group mb-3 questionOption">
+                      <div class="input-group-text p-2">
+                        <input class="form-check-input mt-0" type="radio" value="Option3" name="questionCorrectAnswer" aria-label="Radio button for following text input" formControlName = "questionCorrectAnswer">
+                      </div>
+                      <span class="input-group-text" id="basic-addon1">C</span>
+                      <input type="text" class="form-control" placeholder="Option C" aria-label="Option C" aria-describedby="basic-addon1" formControlName = "questionOption3">
+                    </div>
+                    <div class="input-group mb-3 questionOption">
+                      <div class="input-group-text p-2">
+                        <input class="form-check-input mt-0" type="radio" value="Option4" name="questionCorrectAnswer" aria-label="Radio button for following text input" formControlName = "questionCorrectAnswer">
+                      </div>
+                      <span class="input-group-text" id="basic-addon1">D</span>
+                      <input type="text" class="form-control" placeholder="Option D" aria-label="Option D" aria-describedby="basic-addon1" formControlName = "questionOption4">
+                    </div>
+                    <div class="buttons p-0">
+                      <button class="btn btn-outline-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="submitQuestion()" *ngIf="addnewQuestion">Submit Question</button>
+                      <button class="btn btn-outline-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="submitQuestion()" *ngIf="isUpdate">Update Question</button>
+                      <button class="btn btn-outline-danger" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="deleteThis()">Delete Question</button>
+                    </div>
+                  </div>
+       </form>
+      <div class="buttons">
+          <button [disabled]="(!canAddQuestion || isUpdate)" class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="addQuestion()">Add Question</button>
+          <button [disabled]="(!canAddQuestion || isUpdate)" class="btn btn-success" style="margin-top: 20px; margin-bottom: 20px;">Submit</button>
+      </div>
 </div>

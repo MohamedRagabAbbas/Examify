@@ -30,10 +30,10 @@
             <th class="totalMarks col text-center" style="font-size: 18px;">
                 Total Marks
             </th>
-            <th class="col" style="font-size: 18px;" style="margin-right: 3px;">Update</th>
-            <th class=" col" style="font-size: 18px;" >Delete</th>
+            <th class="col" style="font-size: 18px;" style="margin-right: 3px;" *ngIf="isStudent">Open</th>
+            <th class="col" style="font-size: 18px;" style="margin-right: 3px;" *ngIf="!isStudent">Update</th>
+            <th class=" col" style="font-size: 18px;" *ngIf="!isStudent">Delete</th>
         </tr>
-
 
         <tr class="secondRow col-12 row justify-content-center align-items-center" *ngFor="let exam of exams">
             <td class="examId col text-center ">
@@ -60,8 +60,9 @@
             <td class="totalMarks col text-center">
                 100
             </td>
-            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "updateExam(exam.id)">Update</button>
-            <button class="btn btn-danger col p-1" (click) = "deleteExam(exam.id)">Delete</button>
+            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "openExam(exam.id)" *ngIf="isStudent">Open</button>
+            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "updateExam(exam.id)" *ngIf="!isStudent">Update</button>
+            <button class="btn btn-danger col p-1" (click) = "deleteExam(exam.id)" *ngIf="!isStudent">Delete</button>
         </tr>
     </table>
     <button class="btn btn-primary  newExam" (click) = "addExam()">Add New Exam</button>

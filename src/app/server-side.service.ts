@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { CourseInfo } from './models/course-info/course-info.module';
-import { Exam, Question } from './BackEndModels/models/models.module';
+import { Answer, Exam, Grade, Question } from './BackEndModels/models/models.module';
 import { ExamInfo } from './models/exam-info/exam-info.module';
 
 
@@ -119,6 +119,11 @@ export class ServerSideService {
     return this.httpClient.post(`${this.rootAPI}Student/AddCourseToStudent/${studentId}/${courseCode}`,null);
   }
 
+  deleteCourse(id:number)
+  {
+    return this.httpClient.delete(`${this.rootAPI}Course/RemoveCourse/${id}`);
+  }
+
   // get exams by course id
   getExamsByCourseId(id:number)
   {
@@ -174,4 +179,14 @@ export class ServerSideService {
     return this.httpClient.put(`${this.rootAPI}Exam/UpdateExam/${id}`,exam);
   }
 
+  // add answer
+  addAnswer(answer:Answer)
+  {
+    return this.httpClient.post(`${this.rootAPI}Answer/AddAnswer`,answer);
+  }
+
+  addGrade(grade:Grade)
+  {
+    return this.httpClient.post(`${this.rootAPI}Grade/AddGrade`,grade);
+  }
 }

@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Exam } from '../BackEndModels/models/models.module';
+import { Exam, Student, Teacher } from '../BackEndModels/models/models.module';
 import { ServerSideService } from '../server-side.service';
 import { ResponseClass } from '../models/response-class/response-class.module';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { User } from '../models/user/user.module';
 
 @Component({
   selector: 'app-exam-dashboard',
@@ -22,9 +23,28 @@ import { ToastrService } from 'ngx-toastr';
 export class ExamDashboardComponent {
     exams:Array<Exam> = [];
     formGroup:FormGroup = new FormGroup({});
+    user:User = new User();
+    isStudent = true;
     constructor(public route: ActivatedRoute,private serverSideService:ServerSideService, private navigator:Router, private toastr: ToastrService) 
     { 
+      const value = localStorage.getItem('user');
+      this.user = value ? JSON.parse(value): User;
       this.allExams(route.snapshot.params['id']);
+      if(this.user.UserRule === '')
+      {
+        this.navigator.navigate(['/login']);
+      }
+      else
+      {
+        if(this.user.UserRule === 'Teacher')
+        {
+          this.isStudent = false;
+        }
+        else if (this.user.UserRule === 'Student')
+        {
+          this.isStudent = true;
+        }
+      }
       
     }
     allExams(id:number)
@@ -83,6 +103,11 @@ export class ExamDashboardComponent {
     addExam()
     {
       this.navigator.navigate(['/GenerateExam/'+this.route.snapshot.params['id']]);
+    }
+
+    openExam(id:number)
+    {
+      this.navigator.navigate(['/openExam/'+id]);
     }
 
 }

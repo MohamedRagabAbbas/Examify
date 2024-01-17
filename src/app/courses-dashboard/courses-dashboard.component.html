@@ -14,7 +14,8 @@
                 <h3>{{course.grade}}</h3>
             </div>
         </div>
-        <Button type="button" class="btn btn-primary" style="width: 100%;" (click)="viewExams(course.code)" >Exams</Button>
+        <Button type="button" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;" (click)="viewExams(course.code)" >View Exams</Button>
+        <Button type="button" class="btn btn-danger" style="width: 100%;" (click)="deleteCourse(course.code)" >Delete</Button>
     </div>
 
     <div class="course col-lg-5" *ngIf="(isStudent)">

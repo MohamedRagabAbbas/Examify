@@ -126,6 +126,41 @@ export class CoursesDashboardComponent {
     this.course = this.courses.filter(x=>x.code === codeCourse)[0];
     this.router.navigate([`/examDashboard/${this.course.id.toString()}`]);
   }
+
+  deleteCourse(codeCourse:string)
+  {
+    this.course = this.courses.filter(x=>x.code === codeCourse)[0];
+    this.serverSideService.deleteCourse(this.course.id).subscribe((data) => 
+    {
+      let value:ResponseClass<Course> = new ResponseClass<Course>();
+      value = data as ResponseClass<Course>;
+      if(value.status == true)
+      {
+        this.toastr.success('Course Deleted Successfully', 'Success');
+        if(this.isStudent)
+        {
+          this.serverSideService.getCourseByStudentId(this.student.id).subscribe((date) => {
+            let value3:ResponseClass<Array<Course>> = new ResponseClass<Array<Course>>();
+            value3 = date as ResponseClass<Array<Course>>;
+            this.courses = value3.data? value3.data : new Array<Course>();
+          });
+        }
+        else if (!this.isStudent)
+        {
+          this.serverSideService.getCourseByTeacherId(this.teacher.id).subscribe((date) => {
+            let value2:ResponseClass<Array<Course>> = new ResponseClass<Array<Course>>();
+            value2 = date as ResponseClass<Array<Course>>;
+            this.courses = value2.data? value2.data : new Array<Course>();
+          });
+        }
+      }
+      else
+      {
+        this.toastr.error('Course Not Deleted', 'Error');
+      }
+    });
+  
+  }
   
 }
 
