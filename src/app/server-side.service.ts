@@ -9,6 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { CourseInfo } from './models/course-info/course-info.module';
+import { Exam, Question } from './BackEndModels/models/models.module';
+import { ExamInfo } from './models/exam-info/exam-info.module';
 
 
 @Injectable({
@@ -115,6 +117,61 @@ export class ServerSideService {
   addCourseToStudent(studentId:number,courseCode:string)
   {
     return this.httpClient.post(`${this.rootAPI}Student/AddCourseToStudent/${studentId}/${courseCode}`,null);
+  }
+
+  // get exams by course id
+  getExamsByCourseId(id:number)
+  {
+    return this.httpClient.get(`${this.rootAPI}Course/GetExamsByCourseId/${id}`);
+  }
+
+  addExam(exam:Exam)
+  {
+    return this.httpClient.post(`${this.rootAPI}Exam/AddExam`,exam);
+  }
+
+  deleteExam(id:number)
+  {
+    return this.httpClient.delete(`${this.rootAPI}Exam/RemoveExam/${id}`);
+  }
+
+  //add question
+  addQuestion(question:Question)
+  {
+    return this.httpClient.post(`${this.rootAPI}Question/AddQuestion`,question);
+  }
+
+  getQuestionsByExamId(id:number)
+  {
+    return this.httpClient.get(`${this.rootAPI}Question/GetQuestionsByExamId/${id}`);
+  }
+
+  deleteQuestion(id:number)
+  {
+    return this.httpClient.delete(`${this.rootAPI}Question/DeleteQuestion/${id}`);
+  }
+
+  updateQuestion(id:number,question:Question)
+  {
+    return this.httpClient.put(`${this.rootAPI}Question/UpdateQuestion/${id}`,question);
+  }
+
+  getQuestionById(id:number)
+  {
+    return this.httpClient.get(`${this.rootAPI}Question/getQuestionById/${id}`);
+  }
+
+  getExamById(id:number)
+  {
+    return this.httpClient.get(`${this.rootAPI}Exam/GetExam/${id}`);
+  }
+
+  updateExam(id:number,exam:ExamInfo)
+  {
+    console.log(exam);
+    console.log(id);
+
+    return this.httpClient.put(`${this.rootAPI}Exam/UpdateExam/${id}`,exam);
   }
 
 }

@@ -1,1 +1,70 @@
-<p>exam-dashboard works!</p>
+<div class="mainContainer" >
+    <table class="row  m-4"  >
+
+        <tr class="col-12 row justify-content-center align-items-center">
+                <th style="font-size: 30px;" class="col-12">Exams</th>
+        </tr>
+
+        <tr class="firstRow col-12 row justify-content-center align-items-center" >
+            <th class="examId col text-center" style="font-size: 18px;">
+                Exam ID
+            </th>
+            <th class="examName col text-center" style="font-size: 18px;">
+                Exam Name
+            </th>
+            <th class="CreatedOn col text-center" style="font-size: 18px;">
+                Created On
+            </th>
+            <th class="CreatedBy col text-center" style="font-size: 18px;">
+                Created By
+            </th>  
+            <th class="startDate col text-center" style="font-size: 18px;">
+                Start Date
+            </th>
+            <th class="endDate col text-center" style="font-size: 18px;">
+                End Date
+            </th>
+            <th class="duration col text-center" style="font-size: 18px;">
+                Duration
+            </th>
+            <th class="totalMarks col text-center" style="font-size: 18px;">
+                Total Marks
+            </th>
+            <th class="col" style="font-size: 18px;" style="margin-right: 3px;">Update</th>
+            <th class=" col" style="font-size: 18px;" >Delete</th>
+        </tr>
+
+
+        <tr class="secondRow col-12 row justify-content-center align-items-center" *ngFor="let exam of exams">
+            <td class="examId col text-center ">
+                {{exam.id}}
+            </td>
+            <td class="examName col text-center">
+                {{exam.name}}
+            </td>
+            <td class="CreatedOn col text-center">
+                {{exam.createdOn | date:'dd-MM-yyyy hh:mm:ss a'}}
+            </td>
+            <td class="CreatedBy col text-center">
+                {{exam.name}}
+            </td>  
+            <td class="startDate col text-center">
+                {{exam.startTime | date:'dd-MM-yyyy hh:mm:ss a'}}
+            </td>
+            <td class="endDate col text-center">
+                {{exam.endTime | date:'dd-MM-yyyy hh:mm:ss a'}}
+            </td>
+            <td class="duration col text-center">
+                1 hour
+            </td>
+            <td class="totalMarks col text-center">
+                100
+            </td>
+            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "updateExam(exam.id)">Update</button>
+            <button class="btn btn-danger col p-1" (click) = "deleteExam(exam.id)">Delete</button>
+        </tr>
+    </table>
+    <button class="btn btn-primary  newExam" (click) = "addExam()">Add New Exam</button>
+</div>
+
+

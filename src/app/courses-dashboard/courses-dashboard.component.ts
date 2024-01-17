@@ -24,6 +24,7 @@ export class CoursesDashboardComponent {
   teacher:Teacher = new Teacher();
   student:Student = new Student();
   courses:Array<Course> = new Array<Course>();
+  course:Course = new Course;
   constructor(private serverSideService: ServerSideService, private router: Router, private toastr: ToastrService  ) 
   {
     const value = localStorage.getItem('user');
@@ -118,6 +119,12 @@ export class CoursesDashboardComponent {
   courseCodeChange(event:any)
   { 
     this.courseCode = event.target.value;
+  }
+
+  viewExams(codeCourse:string)
+  {
+    this.course = this.courses.filter(x=>x.code === codeCourse)[0];
+    this.router.navigate([`/examDashboard/${this.course.id.toString()}`]);
   }
   
 }

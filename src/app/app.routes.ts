@@ -4,13 +4,18 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ExamComponent } from './exam/exam.component';
 import { AddCourseComponent } from './add-course/add-course.component';
 import { CoursesDashboardComponent } from './courses-dashboard/courses-dashboard.component';
+import { ExamDashboardComponent } from './exam-dashboard/exam-dashboard.component';
+import { UpdateExamComponent } from './update-exam/update-exam.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'signUp', component: SignUpComponent },
-    { path: 'GenerateExam', component: ExamComponent },
+    { path: 'GenerateExam/:id', component: ExamComponent },
     { path: 'addCourse', component: AddCourseComponent },
     { path: 'courseDashboard', component: CoursesDashboardComponent },
+    { path: `examDashboard/:id`, component: ExamDashboardComponent, },
+    { path: 'updateExam/:id', component: UpdateExamComponent },
+
 ];
 
 

@@ -46,6 +46,10 @@ export class Exam {
   id: number = 0;
   name: string = "";
   description: string = "";
+  createdOn: Date = new Date();
+  updatedOn: Date = new Date();
+  startTime: Date = new Date();
+  endTime: Date = new Date();
   questions?: Question[] = [];
   courseId: number = 0;
   course: Course = new Course();
@@ -68,7 +72,8 @@ export class Grade {
 // TypeScript equivalent for Question class
 export class Question {
   id: number = 0;
-  ques: string = "";
+  questionNumber:string = "";
+  questionText: string = "";
   option1: string = "";
   option2: string = "";
   option3: string = "";
