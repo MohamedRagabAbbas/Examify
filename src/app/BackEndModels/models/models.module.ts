@@ -14,10 +14,10 @@ export class ModelsModule { }
 // TypeScript equivalent for Answer class
 export class Answer {
   id: number = 0;
-  studentId: number = 0;
-  student: Student = new Student();
   questionId: number = 0;
   question: Question = new Question();
+  attemptId: number = 0;
+  attempt: Attempt = new Attempt();
   answerOption: string = "";
   isCorrect: boolean = false;
   grade: number = 0;
@@ -33,8 +33,6 @@ export class Course {
   teacherId: number = 0;
   teacher: Teacher = new Teacher();
   exams: Exam[] = [];
-  grades: Grade[] = [];
-  answers: Answer[] = [];
 }
 
 // TypeScript equivalent for Exam class
@@ -49,17 +47,15 @@ export class Exam {
   questions?: Question[] = [];
   courseId: number = 0;
   course: Course = new Course();
-  grades?: Grade[] = [];
-  answers?: Answer[] = [];
+  studentAttempts?: StudentAttempts[] = [];
+  attemptsNumber: number = 0;
 }
 
 // TypeScript equivalent for Grade class
 export class Grade {
   id: number = 0;
-  examId: number = 0;
-  exam: Exam = new Exam();
-  studentId: number = 0;
-  student: Student = new Student();
+  attemptId: number = 0;
+  attempt: Attempt[] = [];
   totalGrade: number = 0;
 }
 
@@ -75,7 +71,7 @@ export class Question {
   correctAnswer: string = "";
   weight: number = 0;
   examId: number = 0;
-  exam: Exam = new Exam();
+  exam: Exam[] = [];
   answers?: Answer[] = [];
 }
 
@@ -87,8 +83,7 @@ export class Student {
   email: string = "";
   password: string = "";
   courses?: Course[] = [];
-  answers?: Answer[] = [];
-  grades?: Grade[] = [];
+  studentAttempts?: StudentAttempts[] = [];
 }
 
 // TypeScript equivalent for Teacher class
@@ -101,3 +96,20 @@ export class Teacher {
   courses?: Course[] = [];
 }
 
+export class Attempt
+{
+  id: number = 0;
+  answers?: Answer[] = [];
+  grade?: Grade = new Grade();
+  studentAttemptsId: number = 0;
+  studentAttempts: StudentAttempts[] = [];
+}
+export class StudentAttempts
+{
+  id: number = 0;
+  attempts?: Attempt[] = [];
+  examId: number = 0;
+  exam: Exam = new Exam();
+  studentId: number = 0;
+  student: Student = new Student();
+}

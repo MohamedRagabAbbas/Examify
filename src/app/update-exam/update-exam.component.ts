@@ -43,6 +43,7 @@ export class UpdateExamComponent {
       this.formGroup = this.formBuilder.group({
         examName: ['',Validators.required],
         examDescription: ['',Validators.required],
+        examAttemptsNumber: ['',Validators.required],
         examStartTime: ['',Validators.required],
         examEndTime: ['',Validators.required],
       });
@@ -71,6 +72,7 @@ export class UpdateExamComponent {
           this.formGroup.setValue({
             examName: this.exam.name,
             examDescription: this.exam.description,
+            examAttemptsNumber: this.exam.attemptsNumber,
             examStartTime: this.exam.startTime,
             examEndTime: this.exam.endTime,
           });
@@ -167,6 +169,7 @@ export class UpdateExamComponent {
       this.updatedExam.createdOn = this.exam.createdOn;
       this.updatedExam.startTime = this.startDate;
       this.updatedExam.endTime = this.endDate;
+      this.updatedExam.attemptsNumber = this.formGroup.get('examAttemptsNumber')?.value;
 
       this.serverSide.updateExam(this.examId,this.updatedExam).subscribe((data)=>{
         let result:ResponseClass<Exam> = data as ResponseClass<Exam>;

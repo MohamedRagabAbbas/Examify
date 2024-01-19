@@ -11,6 +11,10 @@
                 <textarea class="form-control" placeholder="Exam Description" id="floatingTextarea2" style="height: 100px; width: 100%;" formControlName = "examDescription"></textarea>
                 <label for="floatingTextarea2" >Exam Description</label>
               </div>
+              <div class="input-group mb-2" style="width: 90%; " >
+                <span class="input-group-text" id="inputGroup-sizing-default" style="padding: 10px;">Number of Attempts</span>
+                <input type="text" class="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="padding-left: 15px; ;" formControlName = "examAttemptsNumber">
+              </div>
               <div style="width: 90%;">
                     <div class="">
                         <h1>Starting Time : {{displayedStartTime | date:'dd-MM-yyyy hh:mm:ss a'}}</h1>

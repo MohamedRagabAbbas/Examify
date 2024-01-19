@@ -107,6 +107,7 @@ export class ExamDashboardComponent {
 
     openExam(id:number)
     {
+      console.log(id);
       this.navigator.navigate(['/openExam/'+id]);
     }
 

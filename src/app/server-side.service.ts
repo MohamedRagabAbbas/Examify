@@ -189,4 +189,13 @@ export class ServerSideService {
   {
     return this.httpClient.post(`${this.rootAPI}Grade/AddGrade`,grade);
   }
+
+  getStudentAttempts(studentId:number,examId:number)
+  {
+    return this.httpClient.get(`${this.rootAPI}StudentAttempts/GetOrCreateStudentAttempts/${studentId}/${examId}`);
+  }
+  addAttempt(studentAttemptsId:number)
+  {
+    return this.httpClient.post(`${this.rootAPI}StudentAttempts/AddAttempt/${studentAttemptsId}`,null);
+  }
 }

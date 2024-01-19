@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Answer, Exam, Grade, Question, Student } from '../BackEndModels/models/models.module';
+import { Answer, Attempt, Exam, Grade, Question, Student, StudentAttempts } from '../BackEndModels/models/models.module';
 import { ServerSideService } from '../server-side.service';
 import { CommonModule } from '@angular/common';
 import { ResponseClass } from '../models/response-class/response-class.module';
@@ -28,6 +28,8 @@ export class OpenExamComponent {
   totalGrade:number = 0;
   Grade:Grade = new Grade();
   student:Student = new Student();
+  attempt:Attempt = new Attempt();
+  studentAttempts:StudentAttempts = new StudentAttempts();
   constructor(public route: ActivatedRoute, private formBuilder:FormBuilder,private serverSide:ServerSideService, private navigator:Router) 
   { 
       const value = localStorage.getItem('user');
@@ -53,7 +55,6 @@ export class OpenExamComponent {
           this.studentId = this.user.Id;
         }
       } 
-
     this.serverSide.getExamById(route.snapshot.params['id']).subscribe((data)=>{
       let result:ResponseClass<Exam> = data as ResponseClass<Exam>;
       if(result.status==true)
@@ -64,8 +65,10 @@ export class OpenExamComponent {
     });
   }
 
-  onSubmit()
+  async onSubmit()
   {
+    this.getOrGnerateStudentAttempts();
+    console.log(this.attempt.id);
     this.getAllSelectedAnswers();
     this.setGrade();
   }
@@ -82,12 +85,35 @@ export class OpenExamComponent {
     });
   }
 
+  getOrGnerateStudentAttempts()
+  {
+    this.serverSide.getStudentAttempts(this.studentId,this.examId).subscribe((data)=>{
+      this.studentAttempts = new StudentAttempts();
+      let result:ResponseClass<StudentAttempts> = data as ResponseClass<StudentAttempts>;
+      console.log(result);
+      if(result.status==true)
+      {
+        this.attempt = new Attempt();
+        this.studentAttempts = result.data as StudentAttempts;
+        this.serverSide.addAttempt(this.studentAttempts.id).subscribe((data)=>{
+          let result:ResponseClass<Attempt> = data as ResponseClass<Attempt>;
+          if(result.status==true)
+          {
+            this.attempt = result.data as Attempt;
+            console.log("I am here");
+            console.log(this.attempt.id);
+          }
+          
+        });
+      }
+    });
+  }
   getAllSelectedAnswers()
   {
     document.querySelectorAll('input[type=radio]:checked').forEach((element) => {
       this.answer = new Answer();
       this.answer.questionId = Number((<HTMLInputElement>element).name);
-      this.answer.studentId = this.studentId;
+      this.answer.attemptId = this.attempt.id;
       this.answer.answerOption = (<HTMLInputElement>element).value;
       this.answer.isCorrect = this.questions.filter(x=>x.id=== Number((<HTMLInputElement>element).name))[0].correctAnswer === (<HTMLInputElement>element).value;
       this.answer.grade = this.questions.filter(x=>x.id=== Number((<HTMLInputElement>element).name))[0].correctAnswer === (<HTMLInputElement>element).value ?  this.questions.filter(x=>x.id=== Number((<HTMLInputElement>element).name))[0].weight : 0;
@@ -105,16 +131,13 @@ export class OpenExamComponent {
 
   setGrade()
   {
-    this.Grade.examId = this.examId;
-    this.Grade.studentId = this.student.id;
     this.Grade.totalGrade = this.totalGrade;
-    this.Grade.totalGrade = this.totalGrade;
+    this.Grade.attemptId = this.attempt.id;
     this.serverSide.addGrade(this.Grade).subscribe((data)=>{
       let result:ResponseClass<Grade> = data as ResponseClass<Grade>;
       if(result.status==true)
       {
         console.log("Grade added successfully");
-
       }
     });
   }

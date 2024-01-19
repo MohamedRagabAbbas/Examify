@@ -3,21 +3,28 @@
   <div  class="container" (ngSubmit)="onSubmit()">
 
       <form class="header" [formGroup]="formGroup" (ngSubmit)="submitExamInfo()">
-             <div class="input-group mb-3" style="width: 90%;">
+             <div class="input-group mb-2" style="width: 90%;">
               <span class="input-group-text " id="inputGroup-sizing-default" style="padding: 10px;" >Name</span>
-              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" formControlName = "examName">
+              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="padding-left: 15px;" formControlName = "examName">
             </div>
-            <div class="form-floating" style="width: 90%;">
+            <div class="form-floating mb-2" style="width: 90%;">
               <textarea class="form-control" placeholder="Exam Description" id="floatingTextarea2" style="height: 100px; width: 100%;" formControlName = "examDescription"></textarea>
               <label for="floatingTextarea2" >Exam Description</label>
             </div>
-            <div style="width: 90%;">
-                  <div class="">
+            <div class="input-group mb-2" style="width: 90%; " >
+              <span class="input-group-text" id="inputGroup-sizing-default" style="padding: 10px;">Number of Attempts</span>
+              <input type="text" class="form-control " aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" style="padding-left: 15px; ;" formControlName = "examAttemptsNumber">
+            </div>
+            <div style="width: 100%; " class="mb-2">
+                  <div class="" style="display: flex; justify-content: space-between;">
+                    <div>
+                      Start Time :
                       <input type="datetime-local" (change)="startDateChanged($event)">
-                  </div>
-                  <br>
-                  <div class="">
+                    </div>
+                    <div>
+                      End Time :   
                       <input type="datetime-local" (change)="endDateChanged($event)" >
+                    </div>
                   </div>
             </div>
             <button class="btn btn-outline-primary p-2 w-75 " style="margin-top: 20px; margin-bottom: 20px; margin-left: 12.5%;" >Submit Exam Information</button>

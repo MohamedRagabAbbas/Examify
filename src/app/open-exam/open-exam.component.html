@@ -3,9 +3,9 @@
     <div  class="container" (ngSubmit)="onSubmit()">
 
         <div class="box" *ngFor="let que of questions" >
-          <div class="qustionNumber justify-content-around text-center align-items-center">
-              <h2 style="font-weight: bold;">{{que.questionNumber}}</h2>
-              <h2 style="font-weight: bold;">Points : {{que.weight}}</h2>
+          <div class="questionNumber  align-items-center row justify-content-lg-between">
+              <h2 class= "col-3  quesNum">{{que.questionNumber}}</h2>
+              <h2 class= "col-3 quesPoint">Points : {{que.weight}}</h2>
           </div>
 
           <div class="questionBox">

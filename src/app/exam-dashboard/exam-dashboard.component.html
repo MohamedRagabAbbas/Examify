@@ -12,6 +12,9 @@
             <th class="examName col text-center" style="font-size: 18px;">
                 Exam Name
             </th>
+            <th class="examName col text-center" style="font-size: 18px;">
+                Attempts Number
+            </th>
             <th class="CreatedOn col text-center" style="font-size: 18px;">
                 Created On
             </th>
@@ -30,7 +33,8 @@
             <th class="totalMarks col text-center" style="font-size: 18px;">
                 Total Marks
             </th>
-            <th class="col" style="font-size: 18px;" style="margin-right: 3px;" *ngIf="isStudent">Open</th>
+            <th class="col" style="font-size: 18px;" style="margin-right: 3px;" *ngIf="isStudent">Start</th>
+            <th class="col" style="font-size: 18px;" style="margin-right: 3px;" *ngIf="isStudent">Show</th>
             <th class="col" style="font-size: 18px;" style="margin-right: 3px;" *ngIf="!isStudent">Update</th>
             <th class=" col" style="font-size: 18px;" *ngIf="!isStudent">Delete</th>
         </tr>
@@ -41,6 +45,9 @@
             </td>
             <td class="examName col text-center">
                 {{exam.name}}
+            </td>
+            <td class="examName col text-center">
+                {{exam.attemptsNumber}}
             </td>
             <td class="CreatedOn col text-center">
                 {{exam.createdOn | date:'dd-MM-yyyy hh:mm:ss a'}}
@@ -60,7 +67,8 @@
             <td class="totalMarks col text-center">
                 100
             </td>
-            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "openExam(exam.id)" *ngIf="isStudent">Open</button>
+            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "openExam(exam.id)" *ngIf="isStudent">New Attempt</button>
+            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "openExam(exam.id)" *ngIf="isStudent">Show</button>
             <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "updateExam(exam.id)" *ngIf="!isStudent">Update</button>
             <button class="btn btn-danger col p-1" (click) = "deleteExam(exam.id)" *ngIf="!isStudent">Delete</button>
         </tr>

@@ -45,6 +45,7 @@ export class ExamComponent {
       examDescription: ['',Validators.required],
       examStartTime: ['',Validators.required],
       examEndTime: ['',Validators.required],
+      examAttemptsNumber: ['',Validators.required],
     });
     
     this.formGroup2 = this.formBuilder.group({
@@ -136,6 +137,7 @@ export class ExamComponent {
     
     this.exam.name = this.formGroup.get('examName')?.value;
     this.exam.description = this.formGroup.get('examDescription')?.value;
+    this.exam.attemptsNumber = this.formGroup.get('examAttemptsNumber')?.value;
     this.exam.courseId = this.route.snapshot.params['id'];
     this.exam.createdOn = this.exam.createdOn;
     this.exam.startTime = this.startDate;
