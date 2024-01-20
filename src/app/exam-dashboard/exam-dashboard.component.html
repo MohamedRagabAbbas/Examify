@@ -39,27 +39,27 @@
             <th class=" col" style="font-size: 18px;" *ngIf="!isStudent">Delete</th>
         </tr>
 
-        <tr class="secondRow col-12 row justify-content-center align-items-center" *ngFor="let exam of exams">
+        <tr class="secondRow col-12 row justify-content-center align-items-center" *ngFor="let ea of examAndAttempts">
             <td class="examId col text-center ">
-                {{exam.id}}
+                {{ea.exam.id}}
             </td>
             <td class="examName col text-center">
-                {{exam.name}}
+                {{ea.exam.name}}
             </td>
             <td class="examName col text-center">
-                {{exam.attemptsNumber}}
+                {{ea.exam.attemptsNumber}}
             </td>
             <td class="CreatedOn col text-center">
-                {{exam.createdOn | date:'dd-MM-yyyy hh:mm:ss a'}}
+                {{ea.exam.createdOn | date:'dd-MM-yyyy hh:mm:ss a'}}
             </td>
             <td class="CreatedBy col text-center">
-                {{exam.name}}
+                {{ea.exam.name}}
             </td>  
             <td class="startDate col text-center">
-                {{exam.startTime | date:'dd-MM-yyyy hh:mm:ss a'}}
+                {{ea.exam.startTime | date:'dd-MM-yyyy hh:mm:ss a'}}
             </td>
             <td class="endDate col text-center">
-                {{exam.endTime | date:'dd-MM-yyyy hh:mm:ss a'}}
+                {{ea.exam.endTime | date:'dd-MM-yyyy hh:mm:ss a'}}
             </td>
             <td class="duration col text-center">
                 1 hour
@@ -67,13 +67,24 @@
             <td class="totalMarks col text-center">
                 100
             </td>
-            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "openExam(exam.id)" *ngIf="isStudent">New Attempt</button>
-            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "openExam(exam.id)" *ngIf="isStudent">Show</button>
-            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "updateExam(exam.id)" *ngIf="!isStudent">Update</button>
-            <button class="btn btn-danger col p-1" (click) = "deleteExam(exam.id)" *ngIf="!isStudent">Delete</button>
+            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "openExam(ea.exam.id)" *ngIf="isStudent">New Attempt</button>
+            <div class="col p-1">
+                <div ngbDropdown class="d-inline-block">
+                   <button class="btn btn-primary p-1" id="dropdownBasic1" ngbDropdownToggle>Show</button>
+                   <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="bg-body-secondary mt-1 p-1" >
+                    <div *ngFor="let attempt of ea.attempts">
+                        <button ngbDropdownItem (click)="showAttempt(attempt)">Attempt {{attempt}}</button>
+                    </div>
+                   </div>
+                </div>
+             </div>
+           <!-- <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "openExam(exam.id)" *ngIf="isStudent">Show</button> -->
+            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "updateExam(ea.exam.id)" *ngIf="!isStudent">Update</button>
+            <button class="btn btn-danger col p-1" (click) = "deleteExam(ea.exam.id)" *ngIf="!isStudent">Delete</button>
         </tr>
     </table>
     <button class="btn btn-primary  newExam" (click) = "addExam()">Add New Exam</button>
+    
 </div>
 
 

@@ -57,6 +57,7 @@ export class Grade {
   attemptId: number = 0;
   attempt: Attempt[] = [];
   totalGrade: number = 0;
+  outOf: number = 0;
 }
 
 // TypeScript equivalent for Question class

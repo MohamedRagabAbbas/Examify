@@ -37,6 +37,7 @@ export class OpenExamComponent {
 
       const value2 = localStorage.getItem(this.user.UserEmail);
       this.student = value2 ? JSON.parse(value2) : null;
+
       this.studentId = this.student.id;
       console.log(this.studentId);
 
@@ -65,12 +66,10 @@ export class OpenExamComponent {
     });
   }
 
-  async onSubmit()
+   onSubmit()
   {
-    this.getOrGnerateStudentAttempts();
-    console.log(this.attempt.id);
-    this.getAllSelectedAnswers();
-    this.setGrade();
+     this.getOrGnerateStudentAttempts();
+     //this.setGrade();
   }
   
   getAllQuestions()
@@ -87,23 +86,24 @@ export class OpenExamComponent {
 
   getOrGnerateStudentAttempts()
   {
-    this.serverSide.getStudentAttempts(this.studentId,this.examId).subscribe((data)=>{
+    this.serverSide.getStudentAttempts(this.student.id,this.examId).subscribe((data)=>{
       this.studentAttempts = new StudentAttempts();
       let result:ResponseClass<StudentAttempts> = data as ResponseClass<StudentAttempts>;
-      console.log(result);
       if(result.status==true)
       {
         this.attempt = new Attempt();
         this.studentAttempts = result.data as StudentAttempts;
         this.serverSide.addAttempt(this.studentAttempts.id).subscribe((data)=>{
           let result:ResponseClass<Attempt> = data as ResponseClass<Attempt>;
+          console.log(this.attempt.id);
+          console.log(result);
           if(result.status==true)
           {
             this.attempt = result.data as Attempt;
-            console.log("I am here");
-            console.log(this.attempt.id);
+            this.getAllSelectedAnswers();
+
+
           }
-          
         });
       }
     });
@@ -118,8 +118,11 @@ export class OpenExamComponent {
       this.answer.isCorrect = this.questions.filter(x=>x.id=== Number((<HTMLInputElement>element).name))[0].correctAnswer === (<HTMLInputElement>element).value;
       this.answer.grade = this.questions.filter(x=>x.id=== Number((<HTMLInputElement>element).name))[0].correctAnswer === (<HTMLInputElement>element).value ?  this.questions.filter(x=>x.id=== Number((<HTMLInputElement>element).name))[0].weight : 0;
       this.totalGrade += this.answer.grade;
+      console.log(this.answer);
+
       this.serverSide.addAnswer(this.answer).subscribe((data)=>{
         let result:ResponseClass<Answer> = data as ResponseClass<Answer>;
+        console.log(result);
         if(result.status==true)
         {
           console.log("Answer added successfully");
@@ -127,6 +130,7 @@ export class OpenExamComponent {
         }
       });
     });
+    this.setGrade();
   }
 
   setGrade()
@@ -138,6 +142,7 @@ export class OpenExamComponent {
       if(result.status==true)
       {
         console.log("Grade added successfully");
+        
       }
     });
   }

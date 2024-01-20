@@ -1,0 +1,47 @@
+<div class="mainContainer">
+    <div class="container row">
+        <div class="box col-12" *ngFor="let answer of attempt.answers" >
+            <div class="questionNumber  align-items-center row justify-content-lg-between">
+                <h2 class= "col-3  quesNum">{{answer.question.questionNumber}}</h2>
+                <h2 class= "col-3 quesPoint">Points : {{answer.isCorrect===true? answer.question.weight : 0 }} / {{answer.question.weight}}</h2>
+            </div>
+  
+            <div class="questionBox">
+                <h1>{{answer.question.questionText}}</h1>
+                    <div class="input-group mb-3 questionOption" [ngClass]="{'CorrectAnswer' : answer.question.correctAnswer === 'Option1'} "> 
+                          <div class="input-group-text p-2" >
+                            <input class="form-check-input mt-0"  type="radio" value="Option1" name="{{answer.question.id}}" aria-label="Radio button for following text input" disabled [checked]="answer.answerOption === 'Option1'">
+                          </div>
+                          <span class="input-group-text" id="basic-addon1">A</span>
+                          <input type="text" class="form-control" placeholder="Option A" aria-label="Option A" aria-describedby="basic-addon1" value="{{answer.question.option1}}" disabled>
+                      </div>
+                      <div class="input-group mb-3 questionOption" [ngClass]="{'CorrectAnswer' : answer.question.correctAnswer === 'Option2'} ">
+                          <div class="input-group-text p-2">
+                            <input class="form-check-input mt-0" type="radio" value="Option2" name="{{answer.question.id}}" aria-label="Radio button for following text input" disabled [checked]="answer.answerOption === 'Option2'">
+                          </div>
+                          <span class="input-group-text" id="basic-addon1">B</span>
+                          <input type="text" class="form-control" placeholder="Option B" aria-label="Option B" aria-describedby="basic-addon1" value="{{answer.question.option2}}" disabled>
+                      </div>
+                      <div class="input-group mb-3 questionOption" [ngClass]="{'CorrectAnswer' : answer.question.correctAnswer === 'Option3'} ">
+                          <div class="input-group-text p-2">
+                            <input class="form-check-input mt-0" type="radio" value="Option3" name="{{answer.question.id}}" aria-label="Radio button for following text input" disabled [checked]="answer.answerOption === 'Option3'">
+                          </div>
+                          <span class="input-group-text" id="basic-addon1">C</span>
+                          <input type="text" class="form-control" placeholder="Option C" aria-label="Option C" aria-describedby="basic-addon1" value="{{answer.question.option3}}" disabled>
+                      </div>
+                      <div class="input-group mb-3 questionOption" [ngClass]="{'CorrectAnswer' : answer.question.correctAnswer === 'Option4'} ">
+                          <div class="input-group-text p-2">
+                            <input class="form-check-input mt-0" type="radio" value="Option4" name="{{answer.question.id}}" aria-label="Radio button for following text input" disabled [checked]="answer.answerOption === 'Option4'">
+                          </div>
+                          <span class="input-group-text" id="basic-addon1">D</span>
+                          <input type="text" class="form-control" placeholder="Option D" aria-label="Option D" aria-describedby="basic-addon1" value="{{answer.question.option4}}" disabled>
+                    </div>
+          </div>
+        </div> 
+        <div class="result col-12">
+          <h1 class=" text-center">Total Marks : {{attempt.grade?.totalGrade}} / {{attempt.grade?.outOf}}</h1>
+          <h1 class="text-center">Percentage :    {{ percentage( attempt.grade?.totalGrade, attempt.grade?.outOf) }}%</h1>
+      </div>
+    </div>
+    
+</div>

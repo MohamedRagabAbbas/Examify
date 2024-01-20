@@ -198,4 +198,12 @@ export class ServerSideService {
   {
     return this.httpClient.post(`${this.rootAPI}StudentAttempts/AddAttempt/${studentAttemptsId}`,null);
   }
+  getAttemptsId(studentId:number,examId:number)
+  {
+    return this.httpClient.get(`${this.rootAPI}StudentAttempts/GetAttemptsId/${studentId}/${examId}`);
+  }
+  getAttemptById(id:number)
+  {
+    return this.httpClient.get(`${this.rootAPI}StudentAttempts/GetAttempt/${id}`);
+  }
 }
