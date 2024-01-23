@@ -6,6 +6,7 @@ import { ServerSideService } from '../server-side.service';
 import { CommonModule } from '@angular/common';
 import { ResponseClass } from '../models/response-class/response-class.module';
 import { ExamInfo } from '../models/exam-info/exam-info.module';
+import { Toast, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-exam',
@@ -34,17 +35,18 @@ export class ExamComponent {
   sendUpdatedQuestion : Question = new Question();
   questions:Array<Question> = new Array<Question>();
   examId:number = 0;
-  canAddQuestion = true;
+  canAddQuestion = false;
   addnewQuestion = false;
   isUpdate = false;
-  constructor(public route: ActivatedRoute, private formBuilder:FormBuilder,private serverSide:ServerSideService) 
+  constructor(public route: ActivatedRoute, private formBuilder:FormBuilder,private serverSide:ServerSideService,
+    private toastr:ToastrService) 
   { 
 
     this.formGroup = this.formBuilder.group({
       examName: ['',Validators.required],
       examDescription: ['',Validators.required],
-      examStartTime: ['',Validators.required],
-      examEndTime: ['',Validators.required],
+      examStartTime: [Date.now,Validators.required],
+      examEndTime: [Date.now,Validators.required],
       examAttemptsNumber: ['',Validators.required],
     });
     
@@ -139,9 +141,9 @@ export class ExamComponent {
     this.exam.description = this.formGroup.get('examDescription')?.value;
     this.exam.attemptsNumber = this.formGroup.get('examAttemptsNumber')?.value;
     this.exam.courseId = this.route.snapshot.params['id'];
-    this.exam.createdOn = this.exam.createdOn;
-    this.exam.startTime = this.startDate;
-    this.exam.endTime = this.endDate;
+    this.exam.createdOn = new Date(Date.now());
+    this.exam.startTime = this.formGroup.get('examStartTime')?.value as Date;
+    this.exam.endTime = this.formGroup.get('examEndTime')?.value as Date;
 
     this.serverSide.addExam(this.exam).subscribe((data)=>{
       let result:ResponseClass<Exam> = data as ResponseClass<Exam>;
@@ -151,6 +153,8 @@ export class ExamComponent {
         this.canAddQuestion = true;
         this.addnewQuestion = false;
         this.examId = result.data?.id as number;
+        this.toastr.success('Exam Added Successfully', 'Success');
+        console.log(this.exam);
       }
     });
   }

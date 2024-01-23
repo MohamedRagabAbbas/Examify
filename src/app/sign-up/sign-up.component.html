@@ -1,6 +1,73 @@
 <div class="mainContainer">
     <form [formGroup]="formGroup" class="container" (ngSubmit)="onSubmit()">
-      <div class="box">
+      <h1 class="text-xl-center mb-lg-3 log" style="font-size: 30px; color: aqua;">Sign Up</h1>
+      <div class="input-group has-validation">
+        <div class="form-floating is-invalid">
+          <input type="text" [ngClass] = "{'is-invalid' : (name.invalid && name.dirty)}" class="form-control" id="floatingInputGroup2" placeholder="Username" required formControlName="name">
+          <label for="floatingInputGroup2">Username</label>
+        </div>
+        <div class="invalid-feedback errorMessage" *ngIf = "name.invalid && name.dirty">
+          {{getErrorMessage(name)}}
+        </div>
+      </div>
+
+      <div class="input-group has-validation">
+        <div class="form-floating is-invalid">
+          <input type="email" [ngClass] = "{'is-invalid' : (email.invalid && email.dirty)}" class="form-control" id="floatingInput" placeholder="Email" required formControlName="email">
+          <label for="floatingInput">Email</label>
+        </div>
+        <div class="invalid-feedback errorMessage" *ngIf = "email.invalid && email.dirty">
+          {{getErrorMessage(email)}}
+        </div>
+      </div>
+
+      <div class="input-group has-validation">
+        <div class="form-floating is-invalid passwordField">
+          <input [type]="(showPassword ? 'text' : 'password')" [ngClass] = "{'is-invalid' : (password.invalid && password.dirty)}" class="form-control" id="floatingPassword" placeholder="Password" required formControlName="password">
+          <label for="floatingPassword">Password</label>
+          <i *ngIf="password.dirty" class="bi  iconEye"   [ngStyle]="showPassword?{'font-size' : '20px' , 'top' : 'calc(15% + 10px)'} :{'font-size' : '15px'} " [ngClass]="{'bi-eye' : showPassword,'bi-eye-slash' : !showPassword  }" for="floatingPassword " (click)="showHidePassword()"></i>
+        </div>
+        <div class="invalid-feedback errorMessage" *ngIf = "password.invalid && password.dirty">
+          {{getErrorMessage(password)}}
+        </div>
+      </div>
+
+      <div class="input-group has-validation">
+        <div class="form-floating is-invalid passwordField">
+          <input [type]="(showPassword ? 'text' : 'password')" [ngClass] = "{'is-invalid' : (confirmPassword.dirty && (confirmPassword.invalid || confirmPassword.value !== password.value))}" class="form-control" id="floatingPasswordConfirm" placeholder="Confirm Password" required formControlName="confirmPassword">
+          <label for="floatingPasswordConfirm">Confirm Password</label>
+          <i *ngIf="password.dirty" class="bi  iconEye"   [ngStyle]="showPassword?{'font-size' : '20px' , 'top' : 'calc(15% + 10px)'} :{'font-size' : '15px'} " [ngClass]="{'bi-eye' : showPassword,'bi-eye-slash' : !showPassword  }" for="floatingPassword " (click)="showHidePassword()"></i>
+        </div>
+        <div class="invalid-feedback errorMessage" *ngIf = "confirmPassword.dirty && (confirmPassword.invalid || confirmPassword.value !== password.value)">
+          Passwords do not match.
+        </div>
+      </div>
+
+      <div class="input-group has-validation">
+        <div class="form-floating is-invalid">
+          <mat-radio-group class="options" formControlName="isStudent" style="align-self: center;">
+            <span style="color: white; font-size: 18;">I am a</span>
+            <mat-radio-button value="Student" ><span class="motext" >Student</span></mat-radio-button>
+            <mat-radio-button value="Teacher" ><span class="motext" >Teacher</span></mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="invalid-feedback errorMessage" *ngIf="notSelected">
+          Please select an option.
+        </div>
+      </div>
+
+      <div class="input-group has-validation" *ngIf="!hide">
+        <div class="form-floating is-invalid">
+          <input type="text" [ngClass] = "{'is-invalid' : (grade.invalid && grade.dirty)}" class="form-control" id="floatingInput" placeholder="Grade" required formControlName="grade">
+          <label for="floatingInput">Grade</label>
+        </div>
+        <div class="invalid-feedback errorMessage" *ngIf = "grade.invalid && grade.dirty">
+          Please enter a valid grade.
+        </div>
+      </div>
+
+      <button [disabled]="(formGroup.invalid || confirmPassword.value !== password.value)" class="btn btn-primary submit"  >Sign Up</button>
+      <!-- <div class="box">
         <div class="labels">
           <div class="labelElement"><label for="">I am a </label></div>
           <div class="labelElement"><label for="">User Name: </label></div>
@@ -16,11 +83,7 @@
         </div>
   
         <div class="inputs">
-          <mat-radio-group class="options" formControlName="isStudent" style="align-self: center;">
-            <mat-radio-button value="Student"><span class="motext">Student</span></mat-radio-button>
-            <span class="takingSpace"></span>
-            <mat-radio-button value="Teacher"><span class="motext">Teacher</span></mat-radio-button>
-          </mat-radio-group>
+
           <div class="inputElement"><input type="text" placeholder="Enter Your Name.." formControlName="name"></div>
           <h5 *ngIf = "name.invalid && name.dirty">{{getErrorMessage(name)}}</h5>
           <div class="inputElement"><input type="text" placeholder="Enter Your Email.." formControlName="email"></div>
@@ -32,8 +95,7 @@
           <div class="inputElement"><input type="password" placeholder="Enter Your Password.." formControlName="confirmPassword"></div>
           <h5 *ngIf=" confirmPassword.dirty && (confirmPassword.invalid || confirmPassword.value !== password.value)"> Passwords do not match.</h5>
         </div>
-      </div>
-      <button [disabled]="(formGroup.invalid || confirmPassword.value !== password.value)" class="btn btn-primary submit" type="submit" >Sign Up</button>
+      </div> -->
     </form>
   </div>
   

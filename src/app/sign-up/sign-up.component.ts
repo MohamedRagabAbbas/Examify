@@ -42,6 +42,9 @@ export class SignUpComponent {
   stdeunt: StudentInfo = new StudentInfo();
   teacher: TeacherInfo = new TeacherInfo();
   hide = true;
+  notSelected = false;
+  showPassword = false;
+  iconClass:string = 'bi-eye-slash';
 
   constructor(private _formBuilder: FormBuilder, private serverSideService:ServerSideService,private navigator:Router
     ,private toastr: ToastrService) {
@@ -79,6 +82,12 @@ export class SignUpComponent {
 
 
   onSubmit() {
+    if(this.formGroup.get('isStudent')?.hasError('required'))
+    {
+      this.notSelected = true;
+      this.toastr.error("Please Select User Type","Error");
+      return;
+    }
     if(this.isStudent.value==='Teacher')
     {
       this.addTeacher();
@@ -116,27 +125,32 @@ export class SignUpComponent {
 
   getErrorMessage(control: FormControl) {
 
-    if(this.email.hasError('pattern'))
+    if(control.hasError('required'))
     {
-      return `You must enter a valid email address`;
+      return 'Cannot be empty';
     }
-    if (control.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    if (control.hasError('email')) {
-      return `You must enter a valid email address`;
-    }
-
-    if(control.hasError('pattern'))
+    if(control.hasError('minlength'))
     {
-      return `You must enter a valid password, consists of atleast one special character, /n one number, one smallCase character and one uppderCase character`;
-    }
-
-    if (control.hasError('minlength')) {
-      if(control===this.password)
+      if(control===this.name)
+      {
+        return `You must enter atleast 3 characters`;
+      }
+      else if(control===this.password)
+      {
         return `You must enter atleast 8 characters`;
-      return `You must enter atleast 3 characters`;
+      }
+    }
+    if(control===this.email)
+    {
+      return 'Not a valid email!';
+    }
+    if(control===this.grade)
+    {
+      return 'Not a valid grade!';
+    }
+    if(control===this.password)
+    {
+      return 'Not a valid password!, it must consist of atleast one special character, one number, one smallCase character and one uppderCase character';
     }
 
     return 'Error, Please Enter Valid Input';
@@ -194,6 +208,12 @@ export class SignUpComponent {
         }
       }
     );
+  }
+
+  showHidePassword() {
+    console.log("I am in show hide password");
+    this.showPassword = !this.showPassword;
+    this.iconClass = this.showPassword ? 'bi-eye-slash-fill' : 'bi-eye-slash';
   }
 
 

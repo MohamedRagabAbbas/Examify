@@ -1,15 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
 .mainContainer
 {
-    margin: 20px auto;
-    width: 85%;
+    min-height: calc(100vh - 64px);
+    width: 100%;
+    background-color: #99cadd;
+    box-shadow: 8px 0 8px -8px #523f64, -8px 0 8px -8px #5f4477, 0 8px 8px -8px #573e6e;
     padding: 20px;
-    background-color: #7FC7D9;
-    border-radius: 5px;
-    box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
 }
 
 .course
 {
+    height:max-content;
     margin: 10px;
     padding: 10px;
     background-color: #DCF2F1;

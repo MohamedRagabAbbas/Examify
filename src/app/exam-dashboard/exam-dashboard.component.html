@@ -68,7 +68,7 @@
                 100
             </td>
             <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "openExam(ea.exam.id)" *ngIf="isStudent">New Attempt</button>
-            <div class="col p-1">
+            <div class="col p-1" *ngIf="isStudent">
                 <div ngbDropdown class="d-inline-block">
                    <button class="btn btn-primary p-1" id="dropdownBasic1" ngbDropdownToggle>Show</button>
                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="bg-body-secondary mt-1 p-1" >

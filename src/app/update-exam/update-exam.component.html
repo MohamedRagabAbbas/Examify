@@ -18,12 +18,12 @@
               <div style="width: 90%;">
                     <div class="">
                         <h1>Starting Time : {{displayedStartTime | date:'dd-MM-yyyy hh:mm:ss a'}}</h1>
-                        <input type="datetime-local" (change)="startDateChanged($event)">
+                        <input type="datetime-local" formControlName = "examStartTime">
                     </div>
                     <br>
                     <div class="">
                         <h1>Ending Time : {{displayedEndTime | date:'dd-MM-yyyy hh:mm:ss a'}}</h1>
-                        <input type="datetime-local" (change)="endDateChanged($event)" >
+                        <input type="datetime-local" formControlName = "examEndTime" >
                     </div>
               </div>
               <button class="btn btn-outline-primary p-2 w-75 " style="margin-top: 20px; margin-bottom: 20px; margin-left: 12.5%;" >Update Exam Information</button>

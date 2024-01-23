@@ -48,8 +48,6 @@ export class ExamDashboardComponent {
           this.isStudent = true;
           const value2 = localStorage.getItem(this.user.UserEmail);
           this.student = value2 ? JSON.parse(value2) : null;
-
-
         }
       }
       
@@ -83,6 +81,15 @@ export class ExamDashboardComponent {
                   this.examAndAttempts.push(examAndAttempt);
                 }
               });
+            });
+          }
+          else
+          {
+            this.exams.forEach(element => {
+              let examAndAttempt = new ExamAndAttempts();
+              examAndAttempt.exam = element;
+              examAndAttempt.attempts =  [];
+              this.examAndAttempts.push(examAndAttempt);
             });
           }
         }
@@ -119,6 +126,7 @@ export class ExamDashboardComponent {
         {
           
           this.toastr.success('Exam Deleted Successfully', 'Success');
+          this.examAndAttempts = [];
           this.allExams(this.route.snapshot.params['id']);
         }
         else

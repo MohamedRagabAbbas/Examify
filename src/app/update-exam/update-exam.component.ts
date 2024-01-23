@@ -6,6 +6,7 @@ import { ServerSideService } from '../server-side.service';
 import { CommonModule } from '@angular/common';
 import { ResponseClass } from '../models/response-class/response-class.module';
 import { ExamInfo } from '../models/exam-info/exam-info.module';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-exam',
@@ -37,15 +38,16 @@ export class UpdateExamComponent {
     canAddQuestion = true;
     addnewQuestion = false;
     isUpdate = false;
-    constructor(public route: ActivatedRoute, private formBuilder:FormBuilder,private serverSide:ServerSideService) 
+    constructor(public route: ActivatedRoute, private formBuilder:FormBuilder,private serverSide:ServerSideService,
+      private toastr:ToastrService) 
     { 
 
       this.formGroup = this.formBuilder.group({
         examName: ['',Validators.required],
         examDescription: ['',Validators.required],
         examAttemptsNumber: ['',Validators.required],
-        examStartTime: ['',Validators.required],
-        examEndTime: ['',Validators.required],
+        examStartTime: [Date.now,Validators.required],
+        examEndTime: [Date.now,Validators.required],
       });
       
       this.formGroup2 = this.formBuilder.group({
@@ -167,8 +169,8 @@ export class UpdateExamComponent {
       this.updatedExam.description = this.formGroup.get('examDescription')?.value;
       this.updatedExam.courseId = this.exam.courseId;
       this.updatedExam.createdOn = this.exam.createdOn;
-      this.updatedExam.startTime = this.startDate;
-      this.updatedExam.endTime = this.endDate;
+      this.updatedExam.startTime = this.formGroup.get('examStartTime')?.value as Date;
+      this.updatedExam.endTime = this.formGroup.get('examEndTime')?.value as Date;
       this.updatedExam.attemptsNumber = this.formGroup.get('examAttemptsNumber')?.value;
 
       this.serverSide.updateExam(this.examId,this.updatedExam).subscribe((data)=>{
@@ -180,6 +182,7 @@ export class UpdateExamComponent {
           console.log(result);
           this.canAddQuestion = true;
           this.addnewQuestion = false;
+          this.toastr.success('Exam Updated Successfully', 'Success');
         }
       });
     }

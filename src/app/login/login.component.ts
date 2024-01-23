@@ -40,6 +40,8 @@ export class LoginComponent {
   student:StudentInfo=new StudentInfo();
   teacher:TeacherInfo=new TeacherInfo();
   user:User= new User();
+  showPassword = false;
+  iconClass:string = 'bi-eye-slash';
 
 
   constructor(private _formBuilder: FormBuilder,private serverSideService:ServerSideService
@@ -78,23 +80,16 @@ export class LoginComponent {
 
   getErrorMessage(control: FormControl) {
     if (control.hasError('required')) {
-      return 'You must enter a value';
+      return 'Cannot be empty';
     }
     if(control===this.email)
     {
-      if (this.email.hasError('pattern')) {
-        return 'Not a valid email';
-      }
-    }
+      return 'Not a valid email!';
+    } 
     
     if(control===this.password)
     {
-      if (this.password.hasError('required')) {
-        return 'You must enter a value';
-      }
-      if (this.password.hasError('pattern')) {
-        return 'Not a valid password';
-      }
+      return 'Not a valid password!';
     }
     
     return '';
@@ -144,6 +139,8 @@ export class LoginComponent {
 
   StudentLogin()
   {
+    this.email.setValue(this.email.value.removeWhitespace());
+    this.password.setValue(this.password.value.removeWhitespace());
     this.serverSideService.studentLogin(this.email.value, this.password.value).subscribe((data)=>
     {
       let result:ResponseClass<Student> = new ResponseClass<Student>();
@@ -175,6 +172,16 @@ export class LoginComponent {
         this.toastr.error('Login Failed', 'Error');
       }
     });
+  }
+  GoToRegister()
+  {
+    this.navigator.navigate(['/signUp']);
+  }
+
+  showHidePassword() {
+    console.log("I am in show hide password");
+    this.showPassword = !this.showPassword;
+    this.iconClass = this.showPassword ? 'bi-eye-slash-fill' : 'bi-eye-slash';
   }
   
 }

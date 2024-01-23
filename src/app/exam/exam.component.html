@@ -19,15 +19,17 @@
                   <div class="" style="display: flex; justify-content: space-between;">
                     <div>
                       Start Time :
-                      <input type="datetime-local" (change)="startDateChanged($event)">
+                     <!-- <input type="datetime-local" (change)="startDateChanged($event)"> -->
+                      <input type="datetime-local" formControlName = "examStartTime">
                     </div>
                     <div>
                       End Time :   
-                      <input type="datetime-local" (change)="endDateChanged($event)" >
+                      <!-- <input type="datetime-local" (change)="endDateChanged($event)" > -->
+                      <input type="datetime-local" formControlName = "examEndTime" >
                     </div>
                   </div>
             </div>
-            <button class="btn btn-outline-primary p-2 w-75 " style="margin-top: 20px; margin-bottom: 20px; margin-left: 12.5%;" >Submit Exam Information</button>
+            <button class="btn btn-outline-primary p-2 w-75 " style="margin-top: 20px; margin-bottom: 20px; margin-left: 12.5%;" [disabled] = "(formGroup.invalid)">Submit Exam Information</button>
         </form>
         
 
@@ -112,8 +114,8 @@
                       <input type="text" class="form-control" placeholder="Option D" aria-label="Option D" aria-describedby="basic-addon1" formControlName = "questionOption4">
                     </div>
                     <div class="buttons p-0">
-                      <button class="btn btn-outline-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="submitQuestion()" *ngIf="addnewQuestion">Submit Question</button>
-                      <button class="btn btn-outline-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="submitQuestion()" *ngIf="isUpdate">Update Question</button>
+                      <button class="btn btn-outline-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="submitQuestion()" *ngIf="addnewQuestion" [disabled] = "(formGroup2.invalid)" >Submit Question</button>
+                      <button class="btn btn-outline-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="submitQuestion()" *ngIf="isUpdate" [disabled] = "(formGroup2.invalid)">Update Question</button>
                       <button class="btn btn-outline-danger" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="deleteThis()">Delete Question</button>
                     </div>
                   </div>

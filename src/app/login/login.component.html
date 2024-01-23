@@ -1,24 +1,29 @@
 <div class="mainContainer">
     <form [formGroup]="formGroup" class="container" (ngSubmit)="onSubmit()"  >
-        <div class="box">
-            <div class="labels" >
-                <div class="labelElement"><label for="">Email: </label></div>
-                 <span style="display: flex; flex: 1 auto;" *ngIf = "email.invalid && email.dirty"></span>
-                <div class="labelElement"><label for="">Password: </label></div>
-                  <span style="display: flex; flex: 1 auto;" *ngIf = "password.invalid && password.dirty"></span>
-                <div class="labelElement"><label for="">I am a </label></div>
-            </div>
-            <div class="inputs" >
-                <div class="inputElement"><input type="text" name="" id="" placeholder="Enter Your Email.."  formControlName = "email"></div>
-                   <h5 *ngIf = "email.invalid && email.dirty">{{getErrorMessage(email)}}</h5>
-                <div class="inputElement"><input type="password" name="" id="" placeholder="Enter Your Password.."  formControlName = "password"></div>
-          <h5 *ngIf = "password.invalid && password.dirty">{{getErrorMessage(password)}}</h5>
-
-                <mat-radio-group class="options" formControlName = "isStudent">
-                    <mat-radio-button value="Student"><span class="motext" style="vertical-align: middle;">Student</span></mat-radio-button>
-                    <mat-radio-button value="Teacher"><span class ="motext" style="vertical-align: middle;">Teacher</span></mat-radio-button>
-                </mat-radio-group>
-            </div>
+        <h1 class="text-xl-center mb-lg-3 log" style="font-size: 30px; color: aqua;">Login</h1>
+        <h1></h1>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName = "email">
+            <label for="floatingInput" >Email address</label>
+        </div>
+          <span *ngIf = "email.invalid && email.dirty" class = "errorMessage" >{{getErrorMessage(email)}}</span>
+        <div class="form-floating mb-3 passwordField">
+            <input [type]="(showPassword ? 'text' : 'password')" class="form-control" id="floatingPassword" placeholder="Password" formControlName = "password" > 
+            <label for="floatingPassword " class="" >Password</label>
+            <i *ngIf="password.dirty" class="bi  iconEye"   [ngStyle]="showPassword?{'font-size' : '20px' , 'top' : 'calc(15% + 10px)'} :{'font-size' : '15px'} " [ngClass]="{'bi-eye' : showPassword,'bi-eye-slash' : !showPassword  }" for="floatingPassword " (click)="showHidePassword()"></i>
+        </div>
+          <span *ngIf = "password.invalid && password.dirty"  class = "errorMessage">{{getErrorMessage(password)}}</span>
+          <mat-radio-group class="options justify-content-lg-between mb-1" formControlName="isStudent">
+            <mat-radio-button type="radio" value="Student" name="studentOrTeacher" >
+                <span class="motext" style="vertical-align: middle;">Student</span>
+            </mat-radio-button>
+            <mat-radio-button type="radio" value="Teacher" name="studentOrTeacher" formControlName="isStudent">
+                <span class="motext" style="vertical-align: middle;">Teacher</span>
+            </mat-radio-button>
+        </mat-radio-group>
+        <div>
+            <span class="mb-1">Don't have an account? </span>
+            <a class="link" (click)="GoToRegister()">Register</a>
         </div>
         <button [disabled]="(formGroup.invalid)"  class="btn btn-primary submit">Login</button>
     </form>

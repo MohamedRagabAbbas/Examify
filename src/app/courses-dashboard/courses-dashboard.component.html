@@ -1,14 +1,12 @@
-<div class="mainContainer row justify-content-evenly ">
-    
-
-    <div class="course col-lg-5" *ngFor="let course of courses">
+<div class="mainContainer row justify-content-evenly">
+    <div class="course col-5" *ngFor="let course of courses">
         <div class =" col-12 row">
-            <div class="courseCode col-md-5">
+            <div class="courseCode col-5">
                 <h3>Course Code: </h3>
                 <h3>Course Subject: </h3>
                 <h3>Course Grade: </h3>
             </div>
-            <div class="courseInfo col-md-7">
+            <div class="courseInfo col-7">
                 <h3>{{course.code}}</h3>
                 <h3>{{course.subject}}</h3>
                 <h3>{{course.grade}}</h3>
@@ -27,6 +25,7 @@
                     <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" (change)="courseCodeChange($event)">
                 </div>
             </div>
+            
         </div>
         <button class="btn btn-outline-primary" style="width: 100%;" (click) = "AddCourseStudent()"> Add Course</button>
     </div>
