@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ResponseClass } from '../models/response-class/response-class.module';
 import { User } from '../models/user/user.module';
-import { Student, Teacher } from '../BackEndModels/models/models.module';
+import { AuthLogIn, Student, Teacher } from '../BackEndModels/models/models.module';
 
 
 @Component({
@@ -39,6 +39,7 @@ export class LoginComponent {
   formGroup: FormGroup;
   student:StudentInfo=new StudentInfo();
   teacher:TeacherInfo=new TeacherInfo();
+  authLogIn:AuthLogIn = new AuthLogIn();
   user:User= new User();
   showPassword = false;
   iconClass:string = 'bi-eye-slash';
@@ -49,21 +50,12 @@ export class LoginComponent {
     this.formGroup = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-zA-Z0-9_.]+@[a-zA-Z0-9-]+[\.][a-zA-Z]{2,}$')]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$')]],
-      isStudent: ['', [Validators.required]],
     });
   }
 
   onSubmit()
   {
-    console.log(this.isStudent.value);
-    if(this.isStudent.value==="Teacher")
-    {
-      this.TeacherLogin();
-    }
-    else if(this.isStudent.value==="Student")
-    {
-      this.StudentLogin();
-    }
+    this.LogIn();
   }
 
   get email() {
@@ -95,9 +87,19 @@ export class LoginComponent {
     return '';
   }
 
-  TeacherLogin()
+  LogIn()
   {
-    this.serverSideService.teacherLogin(this.email.value, this.password.value).subscribe((data)=>
+    this.authLogIn.email = this.email.value as string;
+    this.authLogIn.password = this.password.value as string;
+    
+    this.serverSideService.logIn(this.authLogIn).subscribe(
+      (data) => 
+      {
+        console.log(data)
+      }
+    );
+  }
+    /*this.serverSideService.teacherLogin(this.email.value, this.password.value).subscribe((data)=>
     {
       let result:ResponseClass<TeacherInfo> = new ResponseClass<TeacherInfo>();
       result=data as ResponseClass<TeacherInfo>;
@@ -112,8 +114,8 @@ export class LoginComponent {
         this.toastr.success('Login Successfully', 'Success').onHidden.subscribe(() => {
         this.navigator.navigate(['/courseDashboard']);});
         this.user.Id = 0;
-        this.user.UserEmail = result.data?.email ?? '';
-        this.user.UserPassword = result.data?.password ?? '';
+       // this.user.UserEmail = result.data?.email ?? '';
+       // this.user.UserPassword = result.data?.password ?? '';
         this.user.UserRule = 'Teacher';
         this.user.Status = true;
         this.serverSideService.addUser(this.user).subscribe((data)=>
@@ -153,8 +155,8 @@ export class LoginComponent {
         this.toastr.success('Login Successfully', 'Success').onHidden.subscribe(() => {
         this.navigator.navigate(['/courseDashboard']);});
         this.user.Id = 0;
-        this.user.UserEmail = result.data?.email ?? '';
-        this.user.UserPassword = result.data?.password ?? '';
+        //this.user.UserEmail = result.data?.email ?? '';
+        //this.user.UserPassword = result.data?.password ?? '';
         this.user.UserRule = 'Student';
         this.user.Status = true;
         this.serverSideService.addUser(this.user).subscribe((data)=>
@@ -173,6 +175,7 @@ export class LoginComponent {
       }
     });
   }
+  */
   GoToRegister()
   {
     this.navigator.navigate(['/signUp']);

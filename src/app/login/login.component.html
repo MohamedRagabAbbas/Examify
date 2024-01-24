@@ -13,14 +13,14 @@
             <i *ngIf="password.dirty" class="bi  iconEye"   [ngStyle]="showPassword?{'font-size' : '20px' , 'top' : 'calc(15% + 10px)'} :{'font-size' : '15px'} " [ngClass]="{'bi-eye' : showPassword,'bi-eye-slash' : !showPassword  }" for="floatingPassword " (click)="showHidePassword()"></i>
         </div>
           <span *ngIf = "password.invalid && password.dirty"  class = "errorMessage">{{getErrorMessage(password)}}</span>
-          <mat-radio-group class="options justify-content-lg-between mb-1" formControlName="isStudent">
+       <!-- <mat-radio-group class="options justify-content-lg-between mb-1" formControlName="isStudent">
             <mat-radio-button type="radio" value="Student" name="studentOrTeacher" >
                 <span class="motext" style="vertical-align: middle;">Student</span>
             </mat-radio-button>
             <mat-radio-button type="radio" value="Teacher" name="studentOrTeacher" formControlName="isStudent">
                 <span class="motext" style="vertical-align: middle;">Teacher</span>
             </mat-radio-button>
-        </mat-radio-group>
+        </mat-radio-group> -->
         <div>
             <span class="mb-1">Don't have an account? </span>
             <a class="link" (click)="GoToRegister()">Register</a>

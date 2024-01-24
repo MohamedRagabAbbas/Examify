@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { CourseInfo } from './models/course-info/course-info.module';
-import { Answer, Exam, Grade, Question } from './BackEndModels/models/models.module';
+import { Answer, AuthLogIn, AuthSignUp, Exam, Grade, Question } from './BackEndModels/models/models.module';
 import { ExamInfo } from './models/exam-info/exam-info.module';
 
 
@@ -205,5 +205,14 @@ export class ServerSideService {
   getAttemptById(id:number)
   {
     return this.httpClient.get(`${this.rootAPI}StudentAttempts/GetAttempt/${id}`);
+  }
+
+  signUp(auth:AuthSignUp)
+  {
+    return this.httpClient.post(`${this.rootAPI}AuthSignUp/SignUp`,auth)
+  }
+  logIn(auth:AuthLogIn)
+  {
+    return this.httpClient.post(`${this.rootAPI}AuthSignUp/LogIn`,auth)
   }
 }

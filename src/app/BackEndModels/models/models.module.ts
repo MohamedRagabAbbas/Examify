@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Call } from '@angular/compiler';
 
 
 
@@ -79,10 +80,9 @@ export class Question {
 // TypeScript equivalent for Student class
 export class Student {
   id: number = 0;
-  name: string = "";
+  applicationUserId:string = "";
+  applicationUser:any = {};
   grade: string = "";
-  email: string = "";
-  password: string = "";
   courses?: Course[] = [];
   studentAttempts?: StudentAttempts[] = [];
 }
@@ -90,9 +90,8 @@ export class Student {
 // TypeScript equivalent for Teacher class
 export class Teacher {
   id: number = 0;
-  name: string = "";
-  email: string = "";
-  password: string = "";
+  applicationUserId:string = "";
+  applicationUser:any = {};
   courseId: number = 0;
   courses?: Course[] = [];
 }
@@ -114,3 +113,19 @@ export class StudentAttempts
   studentId: number = 0;
   student: Student = new Student();
 }
+
+export class AuthSignUp
+{
+  name:string = "";
+  password:string = "";
+  email:string = "";
+  role:string = "";
+  grade:string = "";
+}
+export class AuthLogIn
+{
+  email:string = "";
+  password:string = "";
+}
+
+

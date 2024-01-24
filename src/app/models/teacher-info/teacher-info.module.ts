@@ -10,7 +10,5 @@ import { CommonModule } from '@angular/common';
   ]
 })
 export class TeacherInfo {
-  name:string='';
-  email:string='';
-  password:string='';
+  applicationUserId:string = '';
  }

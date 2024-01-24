@@ -15,6 +15,7 @@ import { TeacherInfo } from '../models/teacher-info/teacher-info.module';
 import { ResponseClass } from '../models/response-class/response-class.module';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthSignUp } from '../BackEndModels/models/models.module';
 
 @Component({
   selector: 'app-sign-up',
@@ -41,6 +42,7 @@ export class SignUpComponent {
   formGroup: FormGroup;
   stdeunt: StudentInfo = new StudentInfo();
   teacher: TeacherInfo = new TeacherInfo();
+  authSignUp:AuthSignUp = new AuthSignUp ();
   hide = true;
   notSelected = false;
   showPassword = false;
@@ -48,6 +50,7 @@ export class SignUpComponent {
 
   constructor(private _formBuilder: FormBuilder, private serverSideService:ServerSideService,private navigator:Router
     ,private toastr: ToastrService) {
+      
     this.formGroup = this._formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-zA-Z0-9_.]+@[a-zA-Z0-9-]+[\.][a-zA-Z]{2,}$')]],
@@ -73,10 +76,6 @@ export class SignUpComponent {
         this.formGroup.get('grade')?.updateValueAndValidity();
       }
     });
-
-    this.formGroup.get('confirmPassword')?.valueChanges.subscribe(value => {
-      console.log(this.confirmPassword.invalid && this.confirmPassword.dirty && this.confirmPassword.value !== this.password.value);
-    });
   }
 
 
@@ -88,6 +87,8 @@ export class SignUpComponent {
       this.toastr.error("Please Select User Type","Error");
       return;
     }
+    this.SignUp();
+    /*
     if(this.isStudent.value==='Teacher')
     {
       this.addTeacher();
@@ -96,7 +97,7 @@ export class SignUpComponent {
     else if(this.isStudent.value==='Student')
     {
       this.AddStudent();
-    }
+    }*/
   }
 
   get name() {
@@ -152,16 +153,25 @@ export class SignUpComponent {
     {
       return 'Not a valid password!, it must consist of atleast one special character, one number, one smallCase character and one uppderCase character';
     }
-
     return 'Error, Please Enter Valid Input';
   }
 
-  addTeacher()
+  SignUp()
   {
-    this.teacher.name=this.name.value;
-    this.teacher.email=this.email.value;
-    this.teacher.password=this.password.value;
-    this.serverSideService.addTeacher(this.teacher).subscribe(
+    this.authSignUp.name = this.name.value as string;
+    this.authSignUp.email = this.email.value as string;
+    this.authSignUp.password = this.password.value as string;
+    this.authSignUp.role = this.isStudent.value as string;
+    this.authSignUp.role === "Student"? this.authSignUp.grade = this.grade.value as string : this.authSignUp.grade = "Not Student";
+
+    this.serverSideService.signUp(this.authSignUp).subscribe(
+      (data) => {
+        console.log(data);
+      }
+    );
+  }
+
+    /*this.serverSideService.addTeacher(this.teacher).subscribe(
       (data)=>
       {
         let result: ResponseClass<TeacherInfo> = new ResponseClass<TeacherInfo>;
@@ -208,14 +218,13 @@ export class SignUpComponent {
         }
       }
     );
-  }
+  }*/
 
   showHidePassword() {
     console.log("I am in show hide password");
     this.showPassword = !this.showPassword;
     this.iconClass = this.showPassword ? 'bi-eye-slash-fill' : 'bi-eye-slash';
   }
-
 
 
 }

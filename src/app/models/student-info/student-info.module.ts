@@ -10,8 +10,8 @@ import { CommonModule } from '@angular/common';
   ]
 })
 export class StudentInfo {
-  name: string = '';
+  
+  applicationUserId:string = '';
   grade: string = '';
-  email: string = '';
-  password: string = '';
+  
 }
