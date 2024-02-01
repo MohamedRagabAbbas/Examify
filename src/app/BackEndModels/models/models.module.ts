@@ -128,4 +128,14 @@ export class AuthLogIn
   password:string = "";
 }
 
+export class AuthenticationResponse
+{
+  token:string = "";
+  isAuthenticated:boolean = false;
+  role:string = "";
+  id:string = "";
+  name:string="";
+  message:string="";
+}
+
 

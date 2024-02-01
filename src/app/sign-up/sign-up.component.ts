@@ -15,7 +15,9 @@ import { TeacherInfo } from '../models/teacher-info/teacher-info.module';
 import { ResponseClass } from '../models/response-class/response-class.module';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AuthSignUp } from '../BackEndModels/models/models.module';
+import { AuthSignUp, AuthenticationResponse } from '../BackEndModels/models/models.module';
+import {AuthServiceService} from '../Services/auth-service.service'
+
 
 @Component({
   selector: 'app-sign-up',
@@ -43,13 +45,14 @@ export class SignUpComponent {
   stdeunt: StudentInfo = new StudentInfo();
   teacher: TeacherInfo = new TeacherInfo();
   authSignUp:AuthSignUp = new AuthSignUp ();
+  authenticationResponse:AuthenticationResponse = new AuthenticationResponse();
   hide = true;
   notSelected = false;
   showPassword = false;
   iconClass:string = 'bi-eye-slash';
 
   constructor(private _formBuilder: FormBuilder, private serverSideService:ServerSideService,private navigator:Router
-    ,private toastr: ToastrService) {
+    ,private toastr: ToastrService, private authService:AuthServiceService) {
       
     this.formGroup = this._formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -156,7 +159,7 @@ export class SignUpComponent {
     return 'Error, Please Enter Valid Input';
   }
 
-  SignUp()
+   async SignUp()
   {
     this.authSignUp.name = this.name.value as string;
     this.authSignUp.email = this.email.value as string;
@@ -164,11 +167,20 @@ export class SignUpComponent {
     this.authSignUp.role = this.isStudent.value as string;
     this.authSignUp.role === "Student"? this.authSignUp.grade = this.grade.value as string : this.authSignUp.grade = "Not Student";
 
-    this.serverSideService.signUp(this.authSignUp).subscribe(
-      (data) => {
-        console.log(data);
-      }
-    );
+
+    this.authService.signUp(this.authSignUp).then(()=>
+    {
+        console.log(this.authService.authResponce);
+        if(this.authService.authResponce.isAuthenticated)
+          {
+            this.toastr.success("Successful SignUp..",'success');
+            this.navigator.navigate(['/courseDashboard'])
+          }
+          else
+          {
+            this.toastr.error(this.authService.authResponce.message,'error');
+          }
+    });
   }
 
     /*this.serverSideService.addTeacher(this.teacher).subscribe(

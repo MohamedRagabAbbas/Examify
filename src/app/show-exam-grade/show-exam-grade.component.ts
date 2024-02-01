@@ -30,7 +30,7 @@ export class ShowExamGradeComponent {
     if (grade === undefined || outOf === undefined) {
       return undefined; 
     }
-    if(outOf===0)
+    if(outOf === 0)
     {
       return 0;
     }

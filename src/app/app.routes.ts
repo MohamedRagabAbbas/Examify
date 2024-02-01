@@ -8,6 +8,7 @@ import { ExamDashboardComponent } from './exam-dashboard/exam-dashboard.componen
 import { UpdateExamComponent } from './update-exam/update-exam.component';
 import { OpenExamComponent } from './open-exam/open-exam.component';
 import { ShowExamGradeComponent } from './show-exam-grade/show-exam-grade.component';
+import { TestComponent } from './test/test.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -19,7 +20,8 @@ export const routes: Routes = [
     { path: 'updateExam/:id', component: UpdateExamComponent },
     { path: 'openExam/:id', component: OpenExamComponent },
     { path: 'showExamGrade/:id', component: ShowExamGradeComponent },
-
+    { path: 'text', component:TestComponent },
+    { path: '**', component: LoginComponent },
 ];
 
 

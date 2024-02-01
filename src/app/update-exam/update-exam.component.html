@@ -67,7 +67,7 @@
                         <input type="text" class="form-control" placeholder="Option D" aria-label="Option D" aria-describedby="basic-addon1" value="{{que.option4}}" disabled>
                   </div>
                   <div class="buttons p-0">
-                    <button class="btn btn-outline-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="updateQuestion(que.id)">Update Question</button>
+                    <button class="btn btn-outline-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="updateQuestion(que.id)" [disabled]="addnewQuestion">Update Question</button>
                     <button class="btn btn-outline-danger" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="deleteQuestion(que.id)">Delete Question</button>
                   </div>
               </div>
@@ -112,7 +112,7 @@
                       </div>
                       <div class="buttons p-0">
                         <button class="btn btn-outline-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="submitQuestion()" *ngIf="addnewQuestion">Submit Question</button>
-                        <button class="btn btn-outline-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="submitQuestion()" *ngIf="isUpdate">Update Question</button>
+                        <button class="btn btn-outline-primary" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="submitQuestion()" *ngIf="isUpdate" >Update Question</button>
                         <button class="btn btn-outline-danger" style="margin-top: 20px; margin-bottom: 20px;" type="button" (click)="deleteThis()">Delete Question</button>
                       </div>
                     </div>

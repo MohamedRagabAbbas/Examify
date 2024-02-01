@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ResponseClass } from '../models/response-class/response-class.module';
 import { Teacher } from '../BackEndModels/models/models.module';
 import { User } from '../models/user/user.module';
+import { AuthServiceService } from '../Services/auth-service.service';
 
 
 
@@ -39,20 +40,14 @@ import { User } from '../models/user/user.module';
 export class AddCourseComponent {
   formGroup: FormGroup;
   course:CourseInfo = new CourseInfo();
-  teacher:Teacher= new Teacher();
-  user:User=new User();
 
-  constructor(private _formBuilder: FormBuilder, private serverSideService: ServerSideService, private router: Router, private toastr: ToastrService) {
+  constructor(private _formBuilder: FormBuilder, private serverSideService: ServerSideService, private router: Router, private toastr: ToastrService,
+    private authService:AuthServiceService) {
     this.formGroup = this._formBuilder.group({
       code: ['', [Validators.required,Validators.minLength(4)]],
       subject: ['', [Validators.required, Validators.minLength(3)]],
       grade: ['', [Validators.required]],
     });
-    const value1 = localStorage.getItem('user');
-    this.user = value1 ? JSON.parse(value1) : null;
-
-    const value2 = localStorage.getItem(this.user.UserEmail);
-    this.teacher = value2 ? JSON.parse(value2) : null;
   }
 
   onSubmit()
@@ -60,11 +55,12 @@ export class AddCourseComponent {
     this.course.Code = this.code.value;
     this.course.Subject = this.subject.value;
     this.course.Grade = this.grade.value;
-    //console.log(this.course);
-    //console.log(this.teacher);
-    this.serverSideService.addCourse(this.course,this.teacher.id).subscribe((data)=>
+
+    console.log(this.course);
+    console.log(this.authService.teacherId);
+    this.serverSideService.addCourse(this.course,this.authService.teacherId).subscribe((data)=>
     {
-      //console.log(data);
+      console.log(data);
       let result:ResponseClass<CourseInfo> = new ResponseClass<CourseInfo>();
       result = data as ResponseClass<CourseInfo>;
       if(result.status===true)
@@ -107,7 +103,7 @@ export class AddCourseComponent {
         return 'Not a valid subject';
       }
     }
-    return '';  
+    return 'Not Valid Input';  
   }
 
 }

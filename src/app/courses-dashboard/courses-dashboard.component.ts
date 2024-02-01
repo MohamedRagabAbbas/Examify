@@ -6,6 +6,8 @@ import { User } from '../models/user/user.module';
 import { Course, Student, Teacher } from '../BackEndModels/models/models.module';
 import { ResponseClass } from '../models/response-class/response-class.module';
 import { ToastrService } from 'ngx-toastr';
+import { AuthServiceService } from '../Services/auth-service.service';
+
 
 
 
@@ -19,102 +21,77 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CoursesDashboardComponent {
   isStudent = true;
-  user:User = new User();
   courseCode:string = '';
-  teacher:Teacher = new Teacher();
-  student:Student = new Student();
   courses:Array<Course> = new Array<Course>();
   course:Course = new Course;
-  constructor(private serverSideService: ServerSideService, private router: Router, private toastr: ToastrService  ) 
-  {
-    const value = localStorage.getItem('user');
-    this.user = value ? JSON.parse(value) : null;
-    //console.log("I am in dashboard ");
-    //console.log(this.user);
 
-    if(this.user.UserRule === '')
+  constructor(private serverSideService: ServerSideService, private router: Router, private toastr: ToastrService,
+    private authService:AuthServiceService  ) 
+  {
+    if(!this.authService.authResponce.isAuthenticated)
+    {
+      this.router.navigate(['/login']);
+      return;
+    }
+    if(this.authService.authResponce.role === '')
     {
       this.router.navigate(['/login']);
     }
-    else
-    {
-      if(this.user.UserRule === 'Teacher')
+    else if(this.authService.authResponce.role === 'Teacher')
       {
-        //console.log("I am in dashboard ");
         this.isStudent = false;
-        const value1 = localStorage.getItem(this.user.UserEmail);
-        this.teacher = value1 ? JSON.parse(value1) : null;
-
-        serverSideService.getCourseByTeacherId(this.teacher.id).subscribe((date) => {
-          let value2:ResponseClass<Array<Course>> = new ResponseClass<Array<Course>>();
-          value2 = date as ResponseClass<Array<Course>>;
-          this.courses = value2.data? value2.data : new Array<Course>();
-          console.log(this.courses);
+        serverSideService.getCourseByTeacherId(this.authService.teacherId).subscribe((date) => {
+            let value2:ResponseClass<Array<Course>> = new ResponseClass<Array<Course>>();
+            value2 = date as ResponseClass<Array<Course>>;
+            this.courses = value2.data? value2.data : new Array<Course>();
+            console.log(this.courses);
         });
       }
-      else if (this.user.UserRule === 'Student')
+    else if (this.authService.authResponce.role === 'Student')
       {
         this.isStudent = true;
-        const value2 = localStorage.getItem(this.user.UserEmail);
-        console.log(value2);
-        this.student = value2 ? JSON.parse(value2) : null;
-        //console.log(this.student);
-
-
-        serverSideService.getCourseByStudentId(this.student.id).subscribe((date) => {
+        serverSideService.getCourseByStudentId(this.authService.studentId).subscribe((date) => {
           let value3:ResponseClass<Array<Course>> = new ResponseClass<Array<Course>>();
           value3 = date as ResponseClass<Array<Course>>;
           this.courses = value3.data? value3.data : new Array<Course>();
           console.log(this.courses);
         });
-        
-      }
-
-
-
-
     }
-
-    console.log(this.courses);
   }
-
-  logout()
-  {
-    localStorage.removeItem('user');
-    this.router.navigate(['/login']);
-  }
-
   AddCourseTeacher()
   {
     console.log("I am in add course");
     this.router.navigate(['/addCourse']);
   }
-
   AddCourseStudent()
   {
-    this.serverSideService.addCourseToStudent(this.student.id,this.courseCode).subscribe((data) => 
-    {
-      let value:ResponseClass<Course> = new ResponseClass<Course>();
-      value = data as ResponseClass<Course>;
-      if(value.status == true)
-      {
-        this.toastr.success('Course Added Successfully', 'Success').onHidden.subscribe(() =>
-        {
-          // update the page to see the new added course
+        this.serverSideService.getStudentId(this.authService.authResponce.id).subscribe(
+            (id)=>
+          {
+             let result = new ResponseClass<number>;
+             result = id as ResponseClass<number>;
+            this.serverSideService.addCourseToStudent(result.data as number,this.courseCode).subscribe((data) => 
+            {
+            let value:ResponseClass<Course> = new ResponseClass<Course>();
+            value = data as ResponseClass<Course>;
+            if(value.status == true)
+            {
+              this.toastr.success('Course Added Successfully', 'Success').onHidden.subscribe(() =>
+              {
 
-          this.serverSideService.getCourseByStudentId(this.student.id).subscribe((date) => {
-            let value3:ResponseClass<Array<Course>> = new ResponseClass<Array<Course>>();
-            value3 = date as ResponseClass<Array<Course>>;
-            this.courses = value3.data? value3.data : new Array<Course>();
-            console.log(this.courses);
-          });
-        });
-      }
-      else
-      {
-        this.toastr.error('Course Not Added', 'Error');
-      }
-    });
+                this.serverSideService.getCourseByStudentId(this.authService.studentId).subscribe((date) => {
+                  let value3:ResponseClass<Array<Course>> = new ResponseClass<Array<Course>>();
+                  value3 = date as ResponseClass<Array<Course>>;
+                  this.courses = value3.data? value3.data : new Array<Course>();
+                  console.log(this.courses);
+                });
+              });
+            }
+            else
+            {
+              this.toastr.error('Course Not Added', 'Error');
+            }
+    });});
   }
   courseCodeChange(event:any)
   { 
@@ -139,7 +116,7 @@ export class CoursesDashboardComponent {
         this.toastr.success('Course Deleted Successfully', 'Success');
         if(this.isStudent)
         {
-          this.serverSideService.getCourseByStudentId(this.student.id).subscribe((date) => {
+          this.serverSideService.getCourseByStudentId(this.authService.studentId).subscribe((date) => {
             let value3:ResponseClass<Array<Course>> = new ResponseClass<Array<Course>>();
             value3 = date as ResponseClass<Array<Course>>;
             this.courses = value3.data? value3.data : new Array<Course>();
@@ -147,7 +124,7 @@ export class CoursesDashboardComponent {
         }
         else if (!this.isStudent)
         {
-          this.serverSideService.getCourseByTeacherId(this.teacher.id).subscribe((date) => {
+          this.serverSideService.getCourseByTeacherId(this.authService.teacherId).subscribe((date) => {
             let value2:ResponseClass<Array<Course>> = new ResponseClass<Array<Course>>();
             value2 = date as ResponseClass<Array<Course>>;
             this.courses = value2.data? value2.data : new Array<Course>();
@@ -156,7 +133,7 @@ export class CoursesDashboardComponent {
       }
       else
       {
-        this.toastr.error('Course Not Deleted', 'Error');
+        this.toastr.error('Course Is Not Deleted', 'Error');
       }
     });
   

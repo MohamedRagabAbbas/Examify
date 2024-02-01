@@ -1,24 +1,29 @@
 <div class="mainContainer">
-    <form [formGroup]="formGroup" class="container"  (ngSubmit)="onSubmit()" >
-        <div class="box">
-            <div class="labels" >
-                <div class="labelElement"><label for="">Code: </label></div>
-                 <span class = "" style ="display: flex; flex: 1 auto;" *ngIf = "code.invalid && code.dirty"></span>
-                <div class="labelElement"><label for="">Subject: </label></div>
-                  <span class = "" style ="display: flex; flex: 1 auto;" *ngIf = "subject.invalid && subject.dirty"></span>
-                <div class="labelElement"><label for="">Grade: </label></div>
-                  <span class = "" style ="display: flex; flex: 1 auto;" *ngIf = "grade.invalid && grade.dirty"></span>
+    <form [formGroup]="formGroup" class="box"  (ngSubmit)="onSubmit()" >
+        <h1>Add New Course</h1>
+        <div>
+            <div class="form-floating ">
+                <input type="text" [ngClass]="{'is-invalid' : (code.touched &&  code.invalid && code.dirty )}" class="form-control" id="floatingInput" placeholder="Code" formControlName = "code">
+                <label for="floatingInput" >Code</label>
             </div>
-            <div class="inputs" >
-                <div class="inputElement"><input type="text" name="" id="" placeholder="Enter Course's Code.."  formControlName = "code"></div>
-                   <h5 class= "" *ngIf = "code.invalid && code.dirty">{{getErrorMessage(code)}}</h5>
-                <div class="inputElement"><input type="text" name="" id="" placeholder="Enter Course's Subject.."  formControlName = "subject"></div>
-                   <h5 class= "" *ngIf = "subject.invalid && subject.dirty">{{getErrorMessage(subject)}}</h5>
-                <div class="inputElement"><input type="text" name="" id="" placeholder="Enter Course's Grade.."  formControlName = "grade"></div>
-                   <h5 class= "" *ngIf = "grade.invalid && grade.dirty">{{getErrorMessage(grade)}}</h5>
-            </div>
+            <h5 class= "" *ngIf = "code.touched && (code.invalid && code.dirty)">{{getErrorMessage(code)}}</h5>
         </div>
-        <button [disabled]="(formGroup.invalid)" class="btn btn-primary submit">Add</button>
+        <div>
+          <div class="form-floating">
+            <input type="text" [ngClass]="{'is-invalid' : (code.touched && subject.invalid && subject.dirty )}" class="form-control" id="floatingPassword" placeholder="Subject" formControlName = "subject">
+            <label for="floatingPassword" >Subject</label>
+          </div>
+          <h5 class= "" *ngIf = "code.touched && subject.invalid && subject.dirty">{{getErrorMessage(subject)}}</h5>
+        </div>
+
+        <div>
+          <div class="form-floating mb-3">
+            <input type="text" [ngClass]="{'is-invalid' : (code.touched && grade.invalid && grade.dirty )}" class="form-control" id="floatingInput" placeholder="Grade" formControlName = "grade">
+            <label for="floatingInput">Grade</label>
+          </div>
+          <h5 class= "" *ngIf = "code.touched && grade.invalid && grade.dirty">{{getErrorMessage(grade)}}</h5>
+        </div>
+        <button [disabled]="(formGroup.invalid)" class="btn btn-primary">Add</button>
     </form>
 </div>
 

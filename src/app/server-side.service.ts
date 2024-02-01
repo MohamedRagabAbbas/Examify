@@ -207,12 +207,14 @@ export class ServerSideService {
     return this.httpClient.get(`${this.rootAPI}StudentAttempts/GetAttempt/${id}`);
   }
 
-  signUp(auth:AuthSignUp)
+  getStudentId(id:string)
   {
-    return this.httpClient.post(`${this.rootAPI}AuthSignUp/SignUp`,auth)
+    return this.httpClient.get(`${this.rootAPI}Student/GetStudentId/${id}`)
   }
-  logIn(auth:AuthLogIn)
+  getTeacherId(id:string)
   {
-    return this.httpClient.post(`${this.rootAPI}AuthSignUp/LogIn`,auth)
+    return this.httpClient.get(`${this.rootAPI}Teacher/GetTeacherId/${id}`)
   }
+
+
 }

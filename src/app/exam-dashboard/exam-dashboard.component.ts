@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../models/user/user.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthServiceService } from '../Services/auth-service.service';
 
 @Component({
   selector: 'app-exam-dashboard',
@@ -25,29 +26,26 @@ export class ExamDashboardComponent {
     exams:Array<Exam> = [];
     examAndAttempts:Array<ExamAndAttempts> = [];
     formGroup:FormGroup = new FormGroup({});
-    user:User = new User();
     isStudent = true;
-    student:Student = new Student();
-    constructor(public route: ActivatedRoute,private serverSideService:ServerSideService, private navigator:Router, private toastr: ToastrService) 
+    constructor(public route: ActivatedRoute,private serverSideService:ServerSideService, private navigator:Router, private toastr: ToastrService,
+      private authService:AuthServiceService) 
     { 
-      const value = localStorage.getItem('user');
-      this.user = value ? JSON.parse(value): User;
+
       this.allExams(route.snapshot.params['id']);
-      if(this.user.UserRule === '')
+      this.authService.setCourseId(route.snapshot.params['id']);
+      if(this.authService.authResponce.role === '')
       {
         this.navigator.navigate(['/login']);
       }
       else
       {
-        if(this.user.UserRule === 'Teacher')
+        if(this.authService.authResponce.role === 'Teacher')
         {
           this.isStudent = false;
         }
-        else if (this.user.UserRule === 'Student')
+        else if (this.authService.authResponce.role === 'Student')
         {
           this.isStudent = true;
-          const value2 = localStorage.getItem(this.user.UserEmail);
-          this.student = value2 ? JSON.parse(value2) : null;
         }
       }
       
@@ -63,7 +61,7 @@ export class ExamDashboardComponent {
           if(this.isStudent)
           {
             this.exams.forEach(element => {
-              this.serverSideService.getAttemptsId(this.student.id, element.id).subscribe((data)=>{
+              this.serverSideService.getAttemptsId(this.authService.studentId, element.id).subscribe((data)=>{
                 let result = new ResponseClass<Array<number>>();
                 result = data as ResponseClass<Array<number>>;
                 if(result.status === true)
@@ -103,18 +101,6 @@ export class ExamDashboardComponent {
     updateExam(id:number)
     {
       this.navigator.navigate(['/updateExam/'+id]);
-      /*this.serverSideService.updateExam(id).subscribe((data)=>{
-        let result = new ResponseClass<Exam>();
-        result = data as ResponseClass<Exam>;
-        if(result.status === true)
-        {
-          // use toaster here to show success message
-        }
-        else
-        {
-          // use toaster here to show error message
-        }
-      });*/
     }
 
     deleteExam(id:number)

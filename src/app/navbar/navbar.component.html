@@ -5,23 +5,25 @@
     <span class = "logoName"><span class="firstLetter">E</span>xamify</span>
     <span class="example-spacer"></span>
 
-    <button mat-icon-button class="example-icon userNameButton" aria-label="Example icon-button with heart icon"  (click)="test()">
+    <button mat-icon-button class="example-icon userNameButton" aria-label="Example icon-button with heart icon"  (click)="test()" *ngIf="(authService.authResponce.isAuthenticated)">
       <i class="material-icons userNameIcon">account_circle</i>
-      <span class="userNameText">User Name</span>
+      <span class="userNameText">{{authService.authResponce.name}}</span>
+    </button>
+
+    <button mat-icon-button class="example-icon loginButton" aria-label="Example icon-button with heart icon" (click)="logOut()" *ngIf="(authService.authResponce.isAuthenticated)">
+        <i class="bi bi-box-arrow-right material-icons"></i>
+        <span class="loginText">Log Out</span>
     </button>
     
-    <button mat-icon-button class="example-icon loginButton" aria-label="Example icon-button with heart icon" (click)="login()">
-        <i class="material-icons loginIcon">login</i>
+    <button mat-icon-button class="example-icon loginButton" aria-label="Example icon-button with heart icon" (click)="login()" *ngIf="(!authService.authResponce.isAuthenticated)">
+        <i class="material-icons material-icons">login</i>
         <span class="loginText">Login</span>
     </button>
 
-    <button mat-icon-button class="example-icon signUpButton" aria-label="Example icon-button with heart icon" (click)="signUp()">
+    <button mat-icon-button class="example-icon signUpButton" aria-label="Example icon-button with heart icon" (click)="signUp()" *ngIf="(!authService.authResponce.isAuthenticated)">
         <i class="material-icons signUpIcon">group_add</i>
         <span class="signUpText">Sign Up</span>
     </button>
-
-    
-    
 
   </mat-toolbar>
   
