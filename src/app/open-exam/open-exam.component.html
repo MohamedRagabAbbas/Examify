@@ -1,5 +1,8 @@
 <div class="mainContainer">
+  <div class="remainingTime">
+    <h1>Remaining Time: {{ (ExamService.timer$ |async )| timeFormat }}</h1>
 
+  </div>
     <div  class="container" (ngSubmit)="onSubmit()">
 
         <div class="box" *ngFor="let que of questions" >

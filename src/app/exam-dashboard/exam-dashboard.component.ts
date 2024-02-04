@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from '../models/user/user.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthServiceService } from '../Services/auth-service.service';
+import { ExamService } from '../Services/exam.service';
 
 @Component({
   selector: 'app-exam-dashboard',
@@ -23,12 +24,14 @@ import { AuthServiceService } from '../Services/auth-service.service';
   providers: [ServerSideService]
 })
 export class ExamDashboardComponent {
+    
     exams:Array<Exam> = [];
+    examAndTeacher:Array<ExamAndTeacher> = [];
     examAndAttempts:Array<ExamAndAttempts> = [];
     formGroup:FormGroup = new FormGroup({});
     isStudent = true;
     constructor(public route: ActivatedRoute,private serverSideService:ServerSideService, private navigator:Router, private toastr: ToastrService,
-      private authService:AuthServiceService) 
+      private authService:AuthServiceService,private examService:ExamService) 
     { 
 
       this.allExams(route.snapshot.params['id']);
@@ -61,20 +64,46 @@ export class ExamDashboardComponent {
           if(this.isStudent)
           {
             this.exams.forEach(element => {
+              let examAndAttempt = new ExamAndAttempts();
+              examAndAttempt.exam = element;
+
+              this.serverSideService.getTotalMarks(element.id).subscribe((data)=>{
+                let result = new ResponseClass<number>();
+                result = data as ResponseClass<number>;
+                if(result.status === true)
+                {
+                  examAndAttempt.totalMarks = result.data?? 0;
+                }
+                else
+                {
+                  examAndAttempt.totalMarks = 0;
+                }
+              });
+
+              this.serverSideService.getTeacherName(element.id).subscribe((data)=>{
+                let result = new ResponseClass<string>();
+                result = data as ResponseClass<string>;
+                if(result.status === true)
+                {
+                  examAndAttempt.teacherName = result.data?? "";
+                }
+                else
+                {
+                  examAndAttempt.teacherName = "";
+                }
+              });
+              
               this.serverSideService.getAttemptsId(this.authService.studentId, element.id).subscribe((data)=>{
                 let result = new ResponseClass<Array<number>>();
                 result = data as ResponseClass<Array<number>>;
                 if(result.status === true)
                 {
-                  let examAndAttempt = new ExamAndAttempts();
-                  examAndAttempt.exam = element;
+                  
                   examAndAttempt.attempts = result.data?? [];
                   this.examAndAttempts.push(examAndAttempt);
                 }
                 else
                 {
-                  let examAndAttempt = new ExamAndAttempts();
-                  examAndAttempt.exam = element;
                   examAndAttempt.attempts =  [];
                   this.examAndAttempts.push(examAndAttempt);
                 }
@@ -87,7 +116,22 @@ export class ExamDashboardComponent {
               let examAndAttempt = new ExamAndAttempts();
               examAndAttempt.exam = element;
               examAndAttempt.attempts =  [];
-              this.examAndAttempts.push(examAndAttempt);
+              examAndAttempt.teacherName = this.authService.authResponce.name;
+              this.serverSideService.getTotalMarks(element.id).subscribe((data)=>{
+                let result = new ResponseClass<number>();
+                result = data as ResponseClass<number>;
+                if(result.status === true)
+                {
+                  examAndAttempt.totalMarks = result.data?? 0;
+                   this.examAndAttempts.push(examAndAttempt);
+                }
+                else
+                {
+                  examAndAttempt.totalMarks = 0;
+                 this.examAndAttempts.push(examAndAttempt);
+                }
+              });
+
             });
           }
         }
@@ -130,7 +174,8 @@ export class ExamDashboardComponent {
 
     openExam(id:number)
     {
-      console.log(id);
+      const exam = this.examAndAttempts.find(x=>x.exam.id === id)?.exam;
+      this.examService.convertIntoNumber(exam?.duration?? 0);
       this.navigator.navigate(['/openExam/'+id]);
     }
 
@@ -160,4 +205,10 @@ export class ExamDashboardComponent {
 export class ExamAndAttempts{
   exam:Exam = new Exam();
   attempts:Array<number> = [];
+  teacherName:string = "";
+  totalMarks:number = 0;
+}
+export class ExamAndTeacher{
+  examId:number = 0;
+  teacherName:string = "";
 }

@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 })
 export class NavbarComponent {
   constructor(private router: Router, public authService:AuthServiceService, 
+    private authServiceService:AuthServiceService
    ) { }
 
   login() {
@@ -29,6 +30,16 @@ export class NavbarComponent {
   test()
   {
     this.router.navigate(['/GenerateExam']);
+  }
+  courseDashboard()
+  {
+    console.log(this.authServiceService.authResponce.role);
+    if(this.authServiceService.authResponce.role === '')
+    {
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.router.navigate([`/courseDashboard`]);
   }
   logOut()
   {

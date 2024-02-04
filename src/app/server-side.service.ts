@@ -215,6 +215,15 @@ export class ServerSideService {
   {
     return this.httpClient.get(`${this.rootAPI}Teacher/GetTeacherId/${id}`)
   }
+  getTeacherName(id:number)
+  {
+    return this.httpClient.get(`${this.rootAPI}Exam/GetTeacherName/${id}`)
+  }
+
+  getTotalMarks(id:number)
+  {
+    return this.httpClient.get(`${this.rootAPI}Exam/GetTotalMark/${id}`)
+  }
 
 
 }

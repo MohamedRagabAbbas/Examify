@@ -5,7 +5,7 @@
     <span class = "logoName"><span class="firstLetter">E</span>xamify</span>
     <span class="example-spacer"></span>
 
-    <button mat-icon-button class="example-icon userNameButton" aria-label="Example icon-button with heart icon"  (click)="test()" *ngIf="(authService.authResponce.isAuthenticated)">
+    <button mat-icon-button class="example-icon userNameButton" aria-label="Example icon-button with heart icon"  (click)="courseDashboard()" *ngIf="(authService.authResponce.isAuthenticated)">
       <i class="material-icons userNameIcon">account_circle</i>
       <span class="userNameText">{{authService.authResponce.name}}</span>
     </button>

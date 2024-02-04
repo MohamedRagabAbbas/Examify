@@ -48,6 +48,7 @@ export class ExamComponent {
       examStartTime: [Date.now,Validators.required],
       examEndTime: [Date.now,Validators.required],
       examAttemptsNumber: ['',Validators.required],
+      examDuration: ['',Validators.required],
     });
     
     this.formGroup2 = this.formBuilder.group({
@@ -144,6 +145,7 @@ export class ExamComponent {
     this.exam.createdOn = new Date(Date.now());
     this.exam.startTime = this.formGroup.get('examStartTime')?.value as Date;
     this.exam.endTime = this.formGroup.get('examEndTime')?.value as Date;
+    this.exam.duration = this.formGroup.get('examDuration')?.value;
 
     this.serverSide.addExam(this.exam).subscribe((data)=>{
       let result:ResponseClass<Exam> = data as ResponseClass<Exam>;

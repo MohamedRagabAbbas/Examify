@@ -50,6 +50,7 @@ export class Exam {
   course: Course = new Course();
   studentAttempts?: StudentAttempts[] = [];
   attemptsNumber: number = 0;
+  duration: number = 0;
 }
 
 // TypeScript equivalent for Grade class

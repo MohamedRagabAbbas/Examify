@@ -8,6 +8,7 @@ import { AuthServiceService } from './Services/auth-service.service';
 import { LoadingService } from './Services/loading.service';
 import { LoadingInterceptorService } from './Services/loading-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ExamService } from './Services/exam.service';
 
 
 
@@ -23,6 +24,7 @@ export const appConfig: ApplicationConfig = {
     positionClass: 'toast-top-right',}),
     AuthServiceService,
     LoadingService,
+    ExamService,
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptorService, multi: true }
   ],
   };

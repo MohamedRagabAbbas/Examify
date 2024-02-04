@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';  
@@ -24,10 +24,14 @@ import { LoadingInterceptorService } from './Services/loading-interceptor.servic
   ],
 
 })
-export class AppComponent {
-  constructor( public LoadingService:LoadingService) {
+export class AppComponent implements OnDestroy{
+  constructor( public LoadingService:LoadingService, public authService:AuthServiceService) {
 
    }
   [x: string]: any;
   title = 'Examify';
+  ngOnDestroy()
+  {
+    this.authService.logOut();
+  }
 }

@@ -53,7 +53,7 @@
                 {{ea.exam.createdOn | date:'dd-MM-yyyy hh:mm:ss a'}}
             </td>
             <td class="CreatedBy col text-center">
-                {{ea.exam.name}}
+                {{ea.teacherName}}
             </td>  
             <td class="startDate col text-center">
                 {{ea.exam.startTime | date:'dd-MM-yyyy hh:mm:ss a'}}
@@ -62,12 +62,12 @@
                 {{ea.exam.endTime | date:'dd-MM-yyyy hh:mm:ss a'}}
             </td>
             <td class="duration col text-center">
-                1 hour
+                {{ea.exam.duration}} minutes
             </td>
             <td class="totalMarks col text-center">
-                100
+                {{ea.totalMarks}}
             </td>
-            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "openExam(ea.exam.id)" *ngIf="isStudent">New Attempt</button>
+            <button class="btn btn-primary col p-1" style="margin-right: 3px; " (click) = "openExam(ea.exam.id)" *ngIf="(isStudent)" [disabled] = "(ea.exam.attemptsNumber <= ea.attempts.length)">New Attempt</button>
             <div class="col p-1" *ngIf="isStudent">
                 <div ngbDropdown class="d-inline-block">
                    <button class="btn btn-primary p-1" id="dropdownBasic1" ngbDropdownToggle>Show</button>
